@@ -10273,27 +10273,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -10311,27 +10292,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -10349,27 +10311,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option4": {
         "type": "select",
@@ -10387,27 +10330,8 @@
         ]
       },
       "Character4": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island2": {
@@ -10424,27 +10348,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -10455,27 +10360,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -10486,27 +10372,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option4": {
         "type": "select",
@@ -10517,27 +10384,8 @@
         ]
       },
       "Character4": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island3": {
@@ -10569,27 +10417,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -10615,27 +10444,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -10661,27 +10471,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island4": {
@@ -10703,27 +10494,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -10739,27 +10511,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -10775,27 +10528,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option4": {
         "type": "select",
@@ -10811,27 +10545,8 @@
         ]
       },
       "Character4": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island5": {
@@ -10851,27 +10566,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -10885,27 +10581,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -10919,27 +10596,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option4": {
         "type": "select",
@@ -10953,27 +10611,8 @@
         ]
       },
       "Character4": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island6": {
@@ -10996,27 +10635,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11033,27 +10653,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option3": {
         "type": "select",
@@ -11070,27 +10671,8 @@
         ]
       },
       "Character3": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option4": {
         "type": "select",
@@ -11107,27 +10689,8 @@
         ]
       },
       "Character4": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island7": {
@@ -11152,27 +10715,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11191,27 +10735,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island8": {
@@ -11239,27 +10764,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11281,27 +10787,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island9": {
@@ -11328,27 +10815,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11369,27 +10837,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island10": {
@@ -11415,27 +10864,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11455,27 +10885,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island11": {
@@ -11500,27 +10911,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11539,27 +10931,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island12": {
@@ -11581,27 +10954,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11617,27 +10971,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island13": {
@@ -11659,27 +10994,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11695,27 +11011,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island14": {
@@ -11735,27 +11032,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11769,27 +11047,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island15": {
@@ -11814,27 +11073,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11853,27 +11093,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Island16": {
@@ -11898,27 +11119,8 @@
         ]
       },
       "Character1": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       },
       "Option2": {
         "type": "select",
@@ -11937,27 +11139,8 @@
         ]
       },
       "Character2": {
-        "type": "select",
-        "value": "manjuu",
-        "option": [
-          "manjuu",
-          "saratoga",
-          "new_jersey",
-          "tashkent",
-          "lemalin",
-          "shimakaze",
-          "akashi",
-          "ying_swei",
-          "chao_ho",
-          "william_d_porter",
-          "chen_hai",
-          "unicorn",
-          "cheshire",
-          "amagi_chan",
-          "helena",
-          "atago",
-          "friedrich_der_grobe"
-        ]
+        "type": "input",
+        "value": "工作啾"
       }
     },
     "Storage": {
