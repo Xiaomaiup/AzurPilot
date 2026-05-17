@@ -148,15 +148,18 @@ def upload_slices_parallel(token, create_data, path):
             chunks.append(chunk)
 
     total = len(chunks)
+    total_bytes = sum(len(c) for c in chunks)
     if total == 0:
         return
 
-    log(f"uploading {total} slices ({slice_size}B each)")
+    info(f"  {total} slices, {fmt_size(slice_size)} each, {fmt_size(total_bytes)} total")
+
+    t0 = time.time()
+    uploaded = [0]  # mutable counter for thread-safe-ish progress
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {}
         for i, chunk in enumerate(chunks, start=1):
-            # Each thread gets its own session for connection reuse
             s = requests.Session()
             futures[executor.submit(_upload_one_slice, s, server, token, preupload_id, i, chunk)] = i
 
@@ -164,7 +167,13 @@ def upload_slices_parallel(token, create_data, path):
         for future in as_completed(futures):
             slice_no = future.result()
             done += 1
-            log(f"slice done [{done}/{total}]")
+            pct = done * 100 // total
+            elapsed = time.time() - t0
+            speed = (done * slice_size) / elapsed if elapsed > 0 else 0
+            info(f"  [{done}/{total}] {pct}%  {fmt_size(speed)}/s")
+
+    elapsed = time.time() - t0
+    info(f"  all slices done in {elapsed:.1f}s  avg {fmt_size(total_bytes / elapsed)}/s" if elapsed > 0 else "")
 
 
 def complete_upload(session, token, preupload_id):
@@ -191,6 +200,7 @@ def complete_upload(session, token, preupload_id):
 
 def single_upload(session, token, parent_file_id, remote_path, path):
     """Single-step upload for small files (<100MB)."""
+    info("  single-step upload...")
     domain_data = api_json(
         session,
         "GET",
@@ -211,6 +221,7 @@ def single_upload(session, token, parent_file_id, remote_path, path):
         "containDir": "true",
         "duplicate": "2",
     }
+    t0 = time.time()
     result = api_json(
         session,
         "POST",
@@ -220,6 +231,8 @@ def single_upload(session, token, parent_file_id, remote_path, path):
         files=files,
         timeout=(30, 600),
     )
+    elapsed = time.time() - t0
+    info(f"  done in {elapsed:.1f}s ({fmt_size(len(file_bytes))}/s)")
     if result.get("completed") and result.get("fileID"):
         return result["fileID"]
     raise Pan123Error("single upload did not complete")
@@ -230,23 +243,89 @@ def upload_file(session, token, parent_file_id, local_root, path, remote_prefix)
     remote_path = f"/{remote_prefix.strip('/')}/{rel}" if remote_prefix else f"/{rel}"
     size = path.stat().st_size
 
-    # Use single-step upload for small files
     if size <= SINGLE_UPLOAD_MAX_BYTES:
-        log(f"single upload {size}B")
         file_id = single_upload(session, token, parent_file_id, remote_path, path)
-        log(f"done -> {mask(file_id)}")
         return file_id
 
-    # Large file: chunked upload with parallel slices
     create_data = create_file(session, token, parent_file_id, remote_path, path)
     if create_data.get("reuse"):
-        log(f"reuse -> {mask(create_data.get('fileID'))}")
+        info("  skip — already on server")
         return create_data.get("fileID")
 
     upload_slices_parallel(token, create_data, path)
     file_id = complete_upload(session, token, create_data["preuploadID"])
-    log(f"done -> {mask(file_id)}")
     return file_id
+
+
+def list_files(session, token, parent_file_id):
+    """List all files and folders in a directory. Returns list of file objects."""
+    items = []
+    last_file_id = 0
+    while True:
+        data = api_json(
+            session,
+            "GET",
+            f"{API_BASE}/api/v2/file/list",
+            token=token,
+            params={"parentFileId": parent_file_id, "limit": 100, "lastFileId": last_file_id},
+        )
+        for f in data.get("fileList", []):
+            if not f.get("trashed"):
+                items.append(f)
+        last_file_id = data.get("lastFileId", -1)
+        if last_file_id == -1:
+            break
+    return items
+
+
+def trash_files(session, token, file_ids):
+    """Move files to trash by file ID. Max 100 per call."""
+    for i in range(0, len(file_ids), 100):
+        batch = file_ids[i:i + 100]
+        api_json(
+            session,
+            "POST",
+            f"{API_BASE}/api/v1/file/trash",
+            token=token,
+            headers={"Content-Type": "application/json"},
+            json={"fileIDs": batch},
+        )
+
+
+def cleanup_old_versions(session, token, parent_file_id, remote_prefix, keep_count=5):
+    """Keep only the `keep_count` most recent version directories, trash the rest."""
+    prefix = remote_prefix.strip("/")
+    # Find the prefix directory first
+    top_files = list_files(session, token, parent_file_id)
+    prefix_dir = None
+    for f in top_files:
+        if f["type"] == 1 and f["filename"] == prefix:
+            prefix_dir = f
+            break
+    if not prefix_dir:
+        info("  no prefix dir found, skip cleanup")
+        return
+
+    # List version directories inside (these are SHA-named)
+    children = list_files(session, token, prefix_dir["fileId"])
+    sha_dirs = [f for f in children if f["type"] == 1 and len(f["filename"]) == 40]
+    sha_dirs.sort(key=lambda f: f.get("createAt", ""), reverse=True)
+
+    if len(sha_dirs) <= keep_count:
+        info(f"  {len(sha_dirs)} versions, no cleanup needed")
+        return
+
+    old = sha_dirs[keep_count:]
+    old_ids = [f["fileId"] for f in old]
+    info(f"  trashing {len(old_ids)} old version(s)")
+    trash_files(session, token, old_ids)
+
+    # Also trash their contents recursively
+    for old_dir in old:
+        contents = list_files(session, token, old_dir["fileId"])
+        content_ids = [f["fileId"] for f in contents]
+        if content_ids:
+            trash_files(session, token, content_ids)
 
 
 def main():
@@ -268,13 +347,21 @@ def main():
         if path.is_file() and (path.name == "latest.json" or path.suffix == ".zip")
     )
 
-    log(f"total {len(files)} file(s)")
-    for path in files:
+    total = len(files)
+    info(f"[0/{total}]")
+    for idx, path in enumerate(files, start=1):
+        info(
+            f"[{idx}/{total}] "
+            f"{fmt_size(path.stat().st_size)}"
+        )
         try:
             upload_file(session, token, args.parent_file_id, source, path, args.remote_prefix)
         except Exception as e:
-            log(f"FAIL: {type(e).__name__}")
+            info(f"FAIL: {type(e).__name__}")
             raise
+
+    info("cleanup old versions...")
+    cleanup_old_versions(session, token, args.parent_file_id, args.remote_prefix)
 
 
 if __name__ == "__main__":
