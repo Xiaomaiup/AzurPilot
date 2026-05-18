@@ -302,7 +302,7 @@ def trash_files(session, token, file_ids):
         )
 
 
-def cleanup_old_versions(session, token, parent_file_id, remote_prefix, keep_count=5):
+def cleanup_old_versions(session, token, parent_file_id, remote_prefix, keep_count=1):
     """Keep only the `keep_count` most recent version directories, trash the rest."""
     prefix = remote_prefix.strip("/")
     # Find the prefix directory first
@@ -343,7 +343,10 @@ def main():
     parser.add_argument("--source", default="dist/git-over-cdn")
     parser.add_argument("--parent-file-id", type=int, default=int(os.environ.get("PAN123_PARENT_FILE_ID", "0")))
     parser.add_argument("--remote-prefix", default=os.environ.get("PAN123_REMOTE_PREFIX", "AzurPilot_master"))
+    parser.add_argument("--keep-versions", type=int, default=int(os.environ.get("PAN123_KEEP_VERSIONS", "1")))
     args = parser.parse_args()
+    if args.keep_versions < 1:
+        parser.error("--keep-versions must be at least 1")
 
     client_id = os.environ["PAN123_CLIENT_ID"]
     client_secret = os.environ["PAN123_CLIENT_SECRET"]
@@ -378,7 +381,7 @@ def main():
                 time.sleep(wait)
 
     info("cleanup old versions...")
-    cleanup_old_versions(session, token, args.parent_file_id, args.remote_prefix)
+    cleanup_old_versions(session, token, args.parent_file_id, args.remote_prefix, keep_count=args.keep_versions)
 
 
 if __name__ == "__main__":
