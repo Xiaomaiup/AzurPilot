@@ -182,8 +182,8 @@
 
         // ---- 紫币独立轴 ----
         var hasPurpleAxis = showCoins && chartType === 'line' && hasPurpleCoins;
-        // ---- 组合轴（仅黄币使用，虚拟资产和资产已独立） ----
-        var hasCombined = showCoins && chartType === 'line' && hasYellowCoins;
+        // ---- 组合轴（黄币 + 虚拟资产 + 资产共用） ----
+        var hasCombined = showCoins && chartType === 'line' && (hasYellowCoins || hasVirtualAssetSeries || hasAssetSeries);
         // ---- 海里数独立轴 ----
         var hasDistanceAxis = showCoins && chartType === 'line' && hasDistanceSeries;
         var hasExtra = hasPurpleAxis || hasCombined || hasDistanceAxis;
@@ -195,8 +195,9 @@
             }
         }
         if (hasCombined) {
-            // 只扫描黄币数据，虚拟资产和资产已使用独立Y轴
             if (hasYellowCoins) scanRange(yellowCoins);
+            if (hasVirtualAssetSeries) scanRange(lineVirtualAsset);
+            if (hasAssetSeries) scanRange(lineAsset);
             if (combinedMax === -Infinity) combinedMax = 1000;
             var combinedRng = combinedMax - combinedMin || 1;
             combinedMax += combinedRng * 0.08;
@@ -282,19 +283,17 @@
                 var mainVal = mainMin + (mainMax - mainMin) * (i / TICK_CONFIG.count);
                 var y = yOfMain(mainVal);
                 
-                // 绘制虚拟资产刻度（使用独立Y轴的数值，在行动力刻度下方）
+                // 绘制虚拟资产刻度（使用独立Y轴的数值）
                 if (hasVirtualAssetSeries) {
                     var vaVal = virtualAssetMin + (virtualAssetMax - virtualAssetMin) * (i / TICK_CONFIG.count);
                     ctx.fillStyle = "#06b6d4";
-                    // 使用与右侧刻度相同的间距配置，确保不重叠
                     ctx.fillText(Math.round(vaVal), pad.l - TICK_CONFIG.x, y + TICK_CONFIG.baseline + TICK_CONFIG.stackGap);
                 }
                 
-                // 绘制资产刻度（使用独立Y轴的数值，在虚拟资产刻度下方）
+                // 绘制资产刻度（使用独立Y轴的数值）
                 if (hasAssetSeries) {
                     var aVal = assetMin + (assetMax - assetMin) * (i / TICK_CONFIG.count);
                     ctx.fillStyle = "#81c784";
-                    // 如果有虚拟资产，资产刻度在虚拟资产下方；否则直接在行动力下方
                     var offsetY = hasVirtualAssetSeries ? TICK_CONFIG.stackGap * 2 : TICK_CONFIG.stackGap;
                     ctx.fillText(Math.round(aVal), pad.l - TICK_CONFIG.x, y + TICK_CONFIG.baseline + offsetY);
                 }
