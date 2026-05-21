@@ -107,7 +107,7 @@ class OOBEWizard:
 
     @use_scope("ROOT", clear=True)
     def start(self):
-        set_env(title="Alas - Setup", output_animation=False)
+        set_env(title="AzurPilot - Setup", output_animation=False)
         add_css(filepath_css("alas"))
         if self.gui.is_mobile:
             add_css(filepath_css("alas-mobile"))
