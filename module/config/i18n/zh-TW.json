@@ -4297,7 +4297,11 @@
       "CommissionIncomeHeaderCount": "Gui.Stat.CommissionIncomeHeaderCount",
       "CommissionIncomeHeaderAvg": "Gui.Stat.CommissionIncomeHeaderAvg",
       "CommissionIncomeTotalCommissions": "Gui.Stat.CommissionIncomeTotalCommissions",
-      "CommissionIncomeRecentTitle": "Gui.Stat.CommissionIncomeRecentTitle"
+      "CommissionIncomeRecentTitle": "Gui.Stat.CommissionIncomeRecentTitle",
+      "ResourceChartTitle": "全資源變化趨勢",
+      "LoadResourceDataFailed": "Gui.Stat.LoadResourceDataFailed",
+      "NoResourceData": "Gui.Stat.NoResourceData",
+      "NoValidResourceData": "Gui.Stat.NoValidResourceData"
     },
     "Tactical": {
       "SkillAutoSwitch": "Gui.Tactical.SkillAutoSwitch"

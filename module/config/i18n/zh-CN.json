@@ -4154,6 +4154,7 @@
       "Actions": "操作"
     },
     "Update": {
+      "AutoUpdate": "自动更新",
       "UpToDate": "已是最新版本",
       "HaveUpdate": "有新版本可用",
       "UpdateStart": "开始更新",
@@ -4297,7 +4298,11 @@
       "CommissionIncomeHeaderCount": "委托次数",
       "CommissionIncomeHeaderAvg": "平均/次",
       "CommissionIncomeTotalCommissions": "委托总次数: {value}",
-      "CommissionIncomeRecentTitle": "最近委托记录"
+      "CommissionIncomeRecentTitle": "最近委托记录",
+      "ResourceChartTitle": "全资源变化趋势",
+      "LoadResourceDataFailed": "加载资源数据失败: {e}",
+      "NoResourceData": "暂无资源变化数据，运行脚本后将自动记录",
+      "NoValidResourceData": "暂无有效资源数据"
     },
     "Tactical": {
       "SkillAutoSwitch": "Gui.Tactical.SkillAutoSwitch"

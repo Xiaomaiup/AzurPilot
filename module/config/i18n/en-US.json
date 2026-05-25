@@ -4154,6 +4154,7 @@
       "Actions": "Actions"
     },
     "Update": {
+      "AutoUpdate": "Auto Update",
       "UpToDate": "Already the latest version",
       "HaveUpdate": "A new version is available",
       "UpdateStart": "Start updating",
@@ -4297,7 +4298,11 @@
       "CommissionIncomeHeaderCount": "Commissions",
       "CommissionIncomeHeaderAvg": "Avg/Run",
       "CommissionIncomeTotalCommissions": "Total commissions: {value}",
-      "CommissionIncomeRecentTitle": "Recent Commissions"
+      "CommissionIncomeRecentTitle": "Recent Commissions",
+      "ResourceChartTitle": "All Resources Trend",
+      "LoadResourceDataFailed": "Failed to load resource data: {e}",
+      "NoResourceData": "No resource data yet. It will be recorded automatically when the script runs.",
+      "NoValidResourceData": "No valid resource data"
     },
     "Tactical": {
       "SkillAutoSwitch": "Gui.Tactical.SkillAutoSwitch"
