@@ -57,4 +57,5 @@ dev = [
 ]
 
 [tool.uv]
+index-url = "https://mirrors.aliyun.com/pypi/simple/"
 package = false
