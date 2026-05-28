@@ -482,6 +482,150 @@ class RewardTacticalClass(Dock):
         logger.info(f'Tactical finish: {[str(f) for f in self.tactical_finish]}')
         return self.tactical_finish
 
+    def _handle_tactical_add_new_student(self, study_finished):
+        if study_finished:
+            return False
+        if not self.appear(TACTICAL_CHECK, offset=(20, 20)):
+            return False
+        if not self.appear_then_click(ADD_NEW_STUDENT, offset=(800, 20), interval=1):
+            return False
+
+        self.interval_reset([TACTICAL_CHECK, RAPID_TRAINING])
+        self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION, DOCK_CHECK, SKILL_CONFIRM])
+        return True
+
+    def _handle_tactical_finish(self, book_empty, empty_confirm):
+        # sometimes you have TACTICAL_CHECK without black-blurred background
+        # TACTICAL_CLASS_CANCEL and TACTICAL_CHECK appears
+        if not self.appear(TACTICAL_CHECK, offset=(20, 20), interval=2) \
+                or self.appear(TACTICAL_CLASS_START, offset=(20, 20)):
+            empty_confirm.reset()
+            return False, False
+
+        self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
+        if book_empty:
+            self.device.click(BACK_ARROW)
+            self.interval_reset(TACTICAL_CHECK)
+            return True, False
+        if self._tactical_get_finish():
+            self.device.click(BACK_ARROW)
+            self.interval_reset(TACTICAL_CHECK)
+            empty_confirm.reset()
+            return True, True
+
+        self.interval_clear(TACTICAL_CHECK)
+        if empty_confirm.reached():
+            self.device.click(BACK_ARROW)
+            empty_confirm.reset()
+            return True, True
+        return False, False
+
+    def _handle_tactical_popups(self):
+        if self.appear_then_click(REWARD_2, offset=(20, 20), interval=3):
+            self.interval_reset(REWARD_2_WHITE)
+            return True, False
+        if self.appear_then_click(REWARD_2_WHITE, offset=(20, 20), interval=3):
+            self.interval_reset(REWARD_2)
+            return True, False
+        if self.appear_then_click(REWARD_GOTO_TACTICAL, offset=(20, 20), interval=3):
+            self.interval_reset(REWARD_GOTO_TACTICAL_WHITE)
+            return True, False
+        if self.appear_then_click(REWARD_GOTO_TACTICAL_WHITE, offset=(20, 20), interval=3):
+            self.interval_reset(REWARD_GOTO_TACTICAL)
+            return True, False
+        if self.ui_main_appear_then_click(page_reward, interval=3):
+            return True, False
+        if self.handle_popup_confirm('TACTICAL'):
+            self.interval_reset([BOOK_EMPTY_POPUP])
+            return True, False
+        if self.handle_urgent_commission():
+            # Only one button in the middle, when skill reach max level.
+            return True, self.config.Tactical_SkillAutoSwitch
+        if self.ui_page_main_popups():
+            self.interval_reset([BOOK_EMPTY_POPUP])
+            return True, False
+        # Similar to handle_mission_popup_ack, but battle pass item expire popup has a different ACK button
+        if self.appear(MISSION_POPUP_GO, offset=self._popup_offset, interval=2):
+            self.device.click(MISSION_POPUP_ACK)
+            return True, False
+        return False, False
+
+    def _handle_tactical_books_start(self):
+        if not self.appear(TACTICAL_CLASS_START, offset=(30, 30), interval=2):
+            return False, False
+
+        study_finished = False
+        if self._tactical_books_choose():
+            self.dock_select_index = 0
+            self.interval_reset([TACTICAL_CLASS_START, BOOK_EMPTY_POPUP])
+            self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
+        else:
+            study_finished = True
+        return True, study_finished
+
+    def _handle_tactical_dock(self):
+        if not self.appear(DOCK_CHECK, offset=(20, 20), interval=3):
+            return False, False
+        if self.dock_selected():
+            # When you click a ship from page_main -> dock,
+            # this ship will be selected default in tactical dock,
+            # so we need click BACK_ARROW to clear selected state
+            logger.info('Having pre-selected ship in dock, re-enter')
+            self.device.click(BACK_ARROW)
+            self.interval_reset([BOOK_EMPTY_POPUP, DOCK_CHECK], interval=3)
+            return True, False
+
+        study_finished = False
+        # If not enable or can not fina a suitable ship
+        if not self.config.AddNewStudent_Enable:
+            logger.info('Not going to learn skill but in dock, close it')
+            study_finished = True
+            self.device.click(BACK_ARROW)
+        elif not self.select_suitable_ship():
+            study_finished = True
+            self.device.click(BACK_ARROW)
+        # reset DOCK_CHECK to Timer(3)
+        self.interval_timer.pop(DOCK_CHECK.name, None)
+        self.interval_reset([BOOK_EMPTY_POPUP, DOCK_CHECK], interval=3)
+        return True, study_finished
+
+    def _handle_tactical_skill_confirm(self, pending_skill_auto_switch):
+        if not self.appear(SKILL_CONFIRM, offset=(20, 20), interval=3):
+            return False, False, pending_skill_auto_switch
+
+        study_finished = False
+        if pending_skill_auto_switch or self.config.AddNewStudent_Enable:
+            pending_skill_auto_switch = False
+            if not self._tactical_skill_choose():
+                study_finished = True
+                self.device.click(BACK_ARROW)
+        else:
+            logger.info('Not going to learn skill but having SKILL_CONFIRM, close it')
+            study_finished = True
+            self.device.click(BACK_ARROW)
+        self.interval_reset([BOOK_EMPTY_POPUP, SKILL_CONFIRM], interval=3)
+        return True, study_finished, pending_skill_auto_switch
+
+    def _handle_tactical_meta(self):
+        if not self.appear(TACTICAL_META, offset=(200, 20), interval=3):
+            return False
+
+        logger.info('META skill found, exit')
+        self.device.click(BACK_ARROW)
+        # Select the next ship in `select_suitable_ship()`
+        self.dock_select_index += 1
+        # Avoid exit tactical between exiting meta skill to select new ship
+        self.interval_reset([TACTICAL_CHECK, BOOK_EMPTY_POPUP])
+        self.interval_clear(ADD_NEW_STUDENT)
+        return True
+
+    def _handle_tactical_book_empty(self):
+        if not self.appear(BOOK_EMPTY_POPUP, offset=(20, 20), interval=3):
+            return False
+
+        self.device.click(BOOK_EMPTY_POPUP)
+        return True
+
     def tactical_class_receive(self, skip_first_screenshot=True):
         """
         Receive tactical rewards and fill books.
@@ -499,6 +643,7 @@ class RewardTacticalClass(Dock):
         logger.hr('Tactical class receive', level=1)
         received = False
         study_finished = not self.config.AddNewStudent_Enable
+        pending_skill_auto_switch = False
         book_empty = False
         # tactical cards can't be loaded that fast, confirm if it's empty.
         empty_confirm = Timer(0.6, count=2).start()
@@ -508,133 +653,45 @@ class RewardTacticalClass(Dock):
             else:
                 self.device.screenshot()
 
-            # End
             if received and self.appear(REWARD_CHECK, offset=(20, 20)):
                 break
 
-            # Learn new skills
-            if not study_finished and self.appear(TACTICAL_CHECK, offset=(20, 20)) \
-                    and self.appear_then_click(ADD_NEW_STUDENT, offset=(800, 20), interval=1):
-                # Tactical page, has empty position
-                self.interval_reset([TACTICAL_CHECK, RAPID_TRAINING])
-                self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION, DOCK_CHECK, SKILL_CONFIRM])
+            if self._handle_tactical_add_new_student(study_finished):
                 continue
             if self.handle_rapid_training():
                 self.interval_reset(TACTICAL_CHECK)
                 self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION, DOCK_CHECK, SKILL_CONFIRM])
                 continue
 
-            # Get finish time
-            # sometimes you have TACTICAL_CHECK without black-blurred background
-            # TACTICAL_CLASS_CANCEL and TACTICAL_CHECK appears
-            if self.appear(TACTICAL_CHECK, offset=(20, 20), interval=2) \
-                    and not self.appear(TACTICAL_CLASS_START, offset=(20, 20)):
-                self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
-                if book_empty:
-                    self.device.click(BACK_ARROW)
-                    self.interval_reset(TACTICAL_CHECK)
-                    continue
-                if self._tactical_get_finish():
-                    self.device.click(BACK_ARROW)
-                    self.interval_reset(TACTICAL_CHECK)
-                    empty_confirm.reset()
-                    received = True
-                    continue
-                else:
-                    self.interval_clear(TACTICAL_CHECK)
-                    if empty_confirm.reached():
-                        self.device.click(BACK_ARROW)
-                        empty_confirm.reset()
-                        received = True
-                        continue
-            else:
-                empty_confirm.reset()
+            handled, finished = self._handle_tactical_finish(book_empty, empty_confirm)
+            if handled:
+                received = received or finished
+                continue
 
-            # Popups
-            if self.appear_then_click(REWARD_2, offset=(20, 20), interval=3):
-                self.interval_reset(REWARD_2_WHITE)
+            handled, auto_switch = self._handle_tactical_popups()
+            if handled:
+                pending_skill_auto_switch = pending_skill_auto_switch or auto_switch
                 continue
-            if self.appear_then_click(REWARD_2_WHITE, offset=(20, 20), interval=3):
-                self.interval_reset(REWARD_2)
+
+            handled, finished = self._handle_tactical_books_start()
+            if handled:
+                study_finished = study_finished or finished
                 continue
-            if self.appear_then_click(REWARD_GOTO_TACTICAL, offset=(20, 20), interval=3):
-                self.interval_reset(REWARD_GOTO_TACTICAL_WHITE)
-                continue
-            if self.appear_then_click(REWARD_GOTO_TACTICAL_WHITE, offset=(20, 20), interval=3):
-                self.interval_reset(REWARD_GOTO_TACTICAL)
-                continue
-            if self.ui_main_appear_then_click(page_reward, interval=3):
-                continue
-            if self.handle_popup_confirm('TACTICAL'):
-                self.interval_reset([BOOK_EMPTY_POPUP])
-                continue
-            if self.handle_urgent_commission():
-                # Only one button in the middle, when skill reach max level.
-                continue
-            if self.ui_page_main_popups():
-                self.interval_reset([BOOK_EMPTY_POPUP])
-                continue
-            # Similar to handle_mission_popup_ack, but battle pass item expire popup has a different ACK button
-            if self.appear(MISSION_POPUP_GO, offset=self._popup_offset, interval=2):
-                self.device.click(MISSION_POPUP_ACK)
-                continue
-            if self.appear(TACTICAL_CLASS_START, offset=(30, 30), interval=2):
-                if self._tactical_books_choose():
-                    self.dock_select_index = 0
-                    self.interval_reset([TACTICAL_CLASS_START, BOOK_EMPTY_POPUP])
-                    self.interval_clear([POPUP_CONFIRM, POPUP_CANCEL, GET_MISSION])
-                else:
-                    study_finished = True
-                continue
-            # 2025.05.29 game tips that infos skin feature when you enter dock
             if self.handle_game_tips():
                 return True
-            if self.appear(DOCK_CHECK, offset=(20, 20), interval=3):
-                if self.dock_selected():
-                    # When you click a ship from page_main -> dock,
-                    # this ship will be selected default in tactical dock,
-                    # so we need click BACK_ARROW to clear selected state
-                    logger.info('Having pre-selected ship in dock, re-enter')
-                    self.device.click(BACK_ARROW)
-                    self.interval_reset([BOOK_EMPTY_POPUP, DOCK_CHECK], interval=3)
-                    continue
-                # If not enable or can not fina a suitable ship
-                if not self.config.AddNewStudent_Enable:
-                    logger.info('Not going to learn skill but in dock, close it')
-                    study_finished = True
-                    self.device.click(BACK_ARROW)
-                elif not self.select_suitable_ship():
-                    study_finished = True
-                    self.device.click(BACK_ARROW)
-                # reset DOCK_CHECK to Timer(3)
-                self.interval_timer.pop(DOCK_CHECK.name, None)
-                self.interval_reset([BOOK_EMPTY_POPUP, DOCK_CHECK], interval=3)
+
+            handled, finished = self._handle_tactical_dock()
+            if handled:
+                study_finished = study_finished or finished
                 continue
-            if self.appear(SKILL_CONFIRM, offset=(20, 20), interval=3):
-                # If not enable or can not find a skill
-                if self.config.Tactical_SkillAutoSwitch or self.config.AddNewStudent_Enable:
-                    if not self._tactical_skill_choose():
-                        study_finished = True
-                        self.device.click(BACK_ARROW)
-                else:
-                    logger.info('Not going to learn skill but having SKILL_CONFIRM, close it')
-                    study_finished = True
-                    self.device.click(BACK_ARROW)
-                self.interval_reset([BOOK_EMPTY_POPUP, SKILL_CONFIRM], interval=3)
+
+            handled, finished, pending_skill_auto_switch = self._handle_tactical_skill_confirm(pending_skill_auto_switch)
+            if handled:
+                study_finished = study_finished or finished
                 continue
-            if self.appear(TACTICAL_META, offset=(200, 20), interval=3):
-                # If meta's skill page, it's inappropriate
-                logger.info('META skill found, exit')
-                self.device.click(BACK_ARROW)
-                # Select the next ship in `select_suitable_ship()`
-                self.dock_select_index += 1
-                # Avoid exit tactical between exiting meta skill to select new ship
-                self.interval_reset([TACTICAL_CHECK, BOOK_EMPTY_POPUP])
-                self.interval_clear(ADD_NEW_STUDENT)
+            if self._handle_tactical_meta():
                 continue
-            # No books
-            if self.appear(BOOK_EMPTY_POPUP, offset=(20, 20), interval=3):
-                self.device.click(BOOK_EMPTY_POPUP)
+            if self._handle_tactical_book_empty():
                 study_finished = True
                 received = True
                 book_empty = True
