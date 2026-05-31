@@ -695,7 +695,7 @@ class IslandProjectRun(IslandUI):
         if len(draw.shape) == 2:
             draw = cv2.cvtColor(draw, cv2.COLOR_GRAY2BGR)
         elif draw.shape[2] == 3:
-            # ALAS 内部使用 RGB，cv2 保存需要 BGR
+            # AzurPilot 内部使用 RGB，cv2 保存需要 BGR
             draw = cv2.cvtColor(draw, cv2.COLOR_RGB2BGR)
 
         for card in cards:

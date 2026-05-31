@@ -268,7 +268,7 @@ AzurPilot 提供 MCP 服务，可供支持 MCP 的客户端或工具调用。
 | --- | --- |
 | restart_emulator | 重启模拟器 |
 | restart_adb | 重启 ADB |
-| update_alas | 更新 ALAS |
+| update_alas | 更新 AzurPilot |
 
 ## 赞助支持
 
@@ -282,7 +282,7 @@ AzurPilot 提供 MCP 服务，可供支持 MCP 的客户端或工具调用。
 
 ## OCR 模型
 
-本项目使用基于 PaddleOCR 的定制 OCR 模型，用于适配碧蓝航线界面字体和 Alas 截图场景。
+本项目使用基于 PaddleOCR 的定制 OCR 模型，用于适配碧蓝航线界面字体和 AzurPilot 截图场景。
 
 感谢超算互联网提供算力支持。
 
@@ -314,7 +314,7 @@ AzurPilot 提供 MCP 服务，可供支持 MCP 的客户端或工具调用。
 | 项目 | 内容 |
 | --- | --- |
 | 支持语言 | zh-cn, en-us |
-| 训练目标 | 针对碧蓝航线字体与 Alas 截图特性进行训练 |
+| 训练目标 | 针对碧蓝航线字体与 AzurPilot 截图特性进行训练 |
 | 处理方式 | 灰度化 |
 | zh-cn 表现 | 相对 V1.0 准确率降低 |
 | en-us 准确率 | 99.8% |
