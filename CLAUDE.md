@@ -11,7 +11,7 @@ alwaysApply: true
 
 ## 项目概述
 
-AzurLaneAutoScript (ALAS / AzurPilot) 是碧蓝航线手游的自动化框架。通过 ADB/uiautomator2 控制安卓模拟器，截取屏幕截图，通过图像匹配和 OCR 识别 UI 元素，自动执行游戏任务。支持 CN/EN/JP/TW 游戏服务器，各服务器有独立的资源文件。采用 GPL-3.0 许可证。
+AzurPilot 是碧蓝航线手游的自动化框架。通过 ADB/uiautomator2 控制安卓模拟器，截取屏幕截图，通过图像匹配和 OCR 识别 UI 元素，自动执行游戏任务。支持 CN/EN/JP/TW 游戏服务器，各服务器有独立的资源文件。采用 GPL-3.0 许可证。
 
 **设计约束**：为 7×24h 连续运行设计。不支持真机（长时间运行会黑屏/卡死、截图压缩、OCR 模型迁移问题）。固定 1280×720 分辨率——清晰度与截图延迟的最佳平衡，非标准宽高比没有统一标准。
 
@@ -75,13 +75,13 @@ uv run -m dev_tools.button_extract    # 从截图中提取按钮定义
   - 模拟器重启逻辑：`_try_restart_emulator()` 处理 ADB 离线/卡死场景
   - LLM 错误分析：可选集成 OpenAI API 进行错误诊断
   - 配置热重载：`ConfigWatcher` 在任务间检测文件变更
-- **`gui.py`** — WebUI 后端（PyWebIO + Starlette + uvicorn）。每个 ALAS 配置实例运行在独立的 `multiprocessing.Process` 中。
+- **`gui.py`** — WebUI 后端（PyWebIO + Starlette + uvicorn）。每个 AzurPilot 配置实例运行在独立的 `multiprocessing.Process` 中。
   - CLI 参数：`--host`、`-p/--port`、`-k/--key`、`--cdn`、`--electron`、`--ssl-key`、`--ssl-cert`、`--run`
   - 热重载模式：`State.deploy_config.EnableReload` 在子进程中生成 `func()`
   - API 路由：`/api/cl1_stats`、`/api/ap_timeline`、`/api/notify`、`/api/notify_stream`、`/api/import_legacy_upload`、`/obs`、`/ws/live_screenshot`
   - MCP 挂载：`app.mount("/mcp", mcp_app)` — MCP SSE 服务器在 `/mcp`
 - **`mcp_server_sse.py`** — MCP 服务器，通过 SSE 暴露 18 个工具供外部 AI 助手集成。
-  - 服务器名称：`"ALAS-MCP"`，传输：`SseServerTransport("/mcp/messages")`
+  - 服务器名称：`"AzurPilot-MCP"`，传输：`SseServerTransport("/mcp/messages")`
   - 工具：`list_instances`、`get_status`、`list_tasks`、`get_task_help`、`get_resources`、`get_config`、`update_config`、`get_recent_logs`、`start_instance`、`stop_instance`、`get_screenshot`、`get_current_running_task`、`get_scheduler_queue`、`trigger_task`、`clear_scheduler_queue`、`restart_emulator`、`restart_adb`、`update_alas`
 
 ### 模块层结构 (`module/`)
@@ -285,7 +285,7 @@ print(az.appear(SOME_BUTTON))
 ### 调试其他服务器
 ```python
 import module.config.server as server
-server.server = 'en'  # 在导入任何 Alas 模块之前设置
+server.server = 'en'  # 在导入任何 AzurPilot 模块之前设置
 ```
 
 ## 配置系统工作流
@@ -360,7 +360,7 @@ AzurLaneConfig("alas")
 
 ### 开发工具
 ```bash
-uv run -m deploy.installer              # 运行 ALAS 安装器
+uv run -m deploy.installer              # 运行 AzurPilot 安装器
 uv run dev_tools/map_extractor.py       # 从截图提取地图数据
 uv run dev_tools/campaign_swipe.py      # 战役滑动测试工具
 uv run dev_tools/item_statistics.py     # 物品统计提取

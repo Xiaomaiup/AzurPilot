@@ -130,7 +130,7 @@ class GitManager(DeployConfig):
         return client
 
     def git_install(self):
-        logger.hr('Update Alas', 0)
+        logger.hr('Update AzurPilot', 0)
 
         if self.GitOverCdn:
             if self.goc_client.update():
