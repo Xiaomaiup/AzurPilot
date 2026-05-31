@@ -253,7 +253,8 @@ pre.rich-traceback-code {
     background-size: 40px 40px !important;
     background-position: 0 0, 20px 20px !important;
     position: relative !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 /* 右下角缓缓漂浮的爱心气球 */
