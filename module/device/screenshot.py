@@ -74,7 +74,7 @@ class Screenshot(Adb, WSA, DroidCast, AScreenCap, Scrcpy, NemuIpc, LDOpenGL):
             self.image = method()
 
             width, height = image_size(self.image)
-            set_template_match_non_native_720p(width != 1280 or height != 720)
+            set_template_match_non_native_720p(width != 1280 or height != 720, resolution=(width, height))
             if width != 1280 or height != 720:
                 self.image = self.resize_screenshot_to_720p(self.image)
 
