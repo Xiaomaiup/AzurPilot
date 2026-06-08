@@ -391,6 +391,8 @@ class IslandShopBase(Island, WarehouseOCR):
             logger.info(f"基础需求配置（共{len(self.post_products)}个槽位）: {self.post_products}")
             logger.info("===============")
 
+            # 保存原始库存，retry 时恢复
+            _orig_totals = dict(self.current_totals)
             self._compute_base_demands()
 
             logger.info(f"待完成备餐: {self.to_post_products}")
@@ -404,8 +406,9 @@ class IslandShopBase(Island, WarehouseOCR):
             if self.to_post_products:
                 stalled_before = set(self._stalled)
                 self.schedule_production()
-                # 有新产品被标记停滞且仍有空闲岗位 → 重跑需求
+                # 有新产品被标记停滞且仍有空闲岗位 → 恢复库存后重跑需求
                 if set(self._stalled) - stalled_before and self.get_idle_posts():
+                    self.current_totals = _orig_totals
                     self._compute_base_demands()
                     if self.to_post_products:
                         self.to_post_products = self.process_meal_requirements(self.to_post_products)
@@ -765,6 +768,7 @@ class IslandShopBase(Island, WarehouseOCR):
             products_to_process.sort(key=slot_priority)
 
         # 为每个空闲岗位分配生产任务
+        _produced_any = set()  # 本轮至少产出了1个的产品
         post_index = 0
         total_idle_posts = len(idle_posts)
 
@@ -802,6 +806,8 @@ class IslandShopBase(Island, WarehouseOCR):
                     logger.info(f"生产 {product} 时检测到原料不足，保留在计划中等待下一轮")
                     break  # 跳过当前产品，但保留在 to_post_products 中
 
+                # 记录已产出（部分生产不算停滞）
+                _produced_any.add(product)
                 # 更新需求
                 if product in self.to_post_products:
                     self.to_post_products[product] -= actual_number
@@ -818,15 +824,15 @@ class IslandShopBase(Island, WarehouseOCR):
             if post_index >= total_idle_posts:
                 break
 
-        # 更新停滞标记：生产失败的记录下来，成功的清除
+        # 更新停滞标记：只标记零产量的（真正游戏层不足），部分生产的跳过
         remaining = set(self.to_post_products.keys())
-        failed = to_post_before & remaining
+        zero_produced = {p for p in (to_post_before & remaining) if p not in _produced_any}
         cleared = to_post_before - remaining
-        if failed:
-            logger.info(f"[stalled] 标记游戏层失败: {failed}")
+        if zero_produced:
+            logger.info(f"[stalled] 标记游戏层失败: {zero_produced}")
         if cleared:
             logger.info(f"[stalled] 清除标记: {cleared}")
-        self._stalled.update(failed)
+        self._stalled.update(zero_produced)
         self._stalled.difference_update(cleared)
 
         if self.to_post_products:
