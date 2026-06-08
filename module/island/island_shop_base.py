@@ -306,12 +306,17 @@ class IslandShopBase(Island, WarehouseOCR):
         self.to_post_products = {}
         virtual_totals = dict(self.current_totals)
 
-        # 遍历槽位，找到第一个有缺口的就只处理它
+        # 遍历槽位，找到第一个有缺口且可生产的就只处理它
+        # 材料完全不可得的槽位本轮跳过，等后续模块补料后再试
         break_idx = len(self.post_products)
         for idx, (name, target) in enumerate(self.post_products):
             current = virtual_totals.get(name, 0)
             if current < target:
                 deficit = target - current
+                # 检查能否至少生产一部分（>0 即材料部分可得）
+                if self.get_max_producible(name, min(6, deficit)) <= 0:
+                    logger.info(f"槽位{idx + 1} {name} 材料完全不足，本轮跳过")
+                    continue
                 self.to_post_products[name] = deficit
                 virtual_totals[name] = target
                 break_idx = idx
