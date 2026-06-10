@@ -307,7 +307,7 @@ class IslandShopBase(Island, WarehouseOCR):
             if produced_qty > 0:
                 produced_pass[name] = produced_pass.get(name, 0) + produced_qty
 
-    def _compute_base_demands(self, strict=False):
+    def _compute_base_demands(self, strict=False, force_skip=None):
         """计算基础需求：严格按槽位顺序处理，找到第一个有缺口的槽位
         即停止，后续槽位本轮不处理。
 
@@ -318,18 +318,24 @@ class IslandShopBase(Island, WarehouseOCR):
         Args:
             strict: False（默认）需求计算阶段，原料为0不阻断套餐；
                     True 排产无产出时使用，原料为0则跳过该缺口找下一个。
+            force_skip: 强制跳过的产品名集合。排产多次失败（非原料原因如
+                        角色被占）时使用，让本轮不再停留在这个缺口上。
         """
         # ============ 基础需求计算 ============
         logger.info("阶段：基础需求" + ("（严格模式）" if strict else ""))
 
         self.to_post_products = {}
         virtual_totals = dict(self.current_totals)
+        force_skip = force_skip or set()
 
         # 遍历槽位，找到第一个有缺口且可生产的就只处理它
         break_idx = len(self.post_products)
         for idx, (name, target) in enumerate(self.post_products):
             current = virtual_totals.get(name, 0)
             if current < target:
+                if name in force_skip:
+                    logger.info(f"槽位{idx + 1} {name} 本轮已尝试失败，强制跳过")
+                    continue
                 deficit = target - current
                 # 检查本轮能否至少生产一部分（>0 即材料部分可得）
                 # strict 模式时不跳过零库存原料，避免停在无法生产的缺口上
@@ -407,6 +413,7 @@ class IslandShopBase(Island, WarehouseOCR):
 
             # ============ 安排基础需求生产（循环直到无空岗或无缺口） ============
             _produced_pass = {}  # 本次 run() 调用中已生产的累计
+            _force_skip_run = set()  # 排产多次无法生产的缺口（非原料原因），本轮强制跳过
 
             self._schedule_and_track(_produced_pass)
 
@@ -415,7 +422,7 @@ class IslandShopBase(Island, WarehouseOCR):
                 for name, qty in _produced_pass.items():
                     self.current_totals[name] = self.current_totals.get(name, 0) + qty
 
-                self._compute_base_demands()
+                self._compute_base_demands(force_skip=_force_skip_run)
                 if not self.to_post_products:
                     logger.info("所有槽位需求已满足")
                     break
@@ -427,11 +434,10 @@ class IslandShopBase(Island, WarehouseOCR):
                 self._schedule_and_track(_produced_pass)
 
                 if sum(_produced_pass.values()) == prev_pass_total and self.to_post_products:
-                    # 排产无产出但缺口还在：原料未入库（仓库真没有），
-                    # 切换严格模式跳过当前缺口，找后面能做的槽位
-                    logger.info("[循环] 当前缺口材料不足，切换严格模式扫描后续槽位")
+                    # 先切严格模式（绕"原料真没有"的坎儿）
+                    logger.info("[循环] 当前缺口排产失败，切换严格模式扫描")
+                    stuck_before = set(self.to_post_products.keys())
                     self.to_post_products = {}
-                    # 恢复 current_totals（上一轮 _compute 的保留线可能已修改它）
                     self.current_totals = dict(_orig_totals)
                     for name, qty in _produced_pass.items():
                         self.current_totals[name] = self.current_totals.get(name, 0) + qty
@@ -440,7 +446,16 @@ class IslandShopBase(Island, WarehouseOCR):
                         break
                     self.to_post_products = self.process_meal_requirements(self.to_post_products)
                     logger.info(f"基础需求生产计划（严格模式）: {self.to_post_products}")
+
+                    strict_prev_total = sum(_produced_pass.values())
                     self._schedule_and_track(_produced_pass)
+
+                    if sum(_produced_pass.values()) == strict_prev_total and self.to_post_products:
+                        # 严格模式也无产出 → 非原料原因（角色被占等），强制跳过
+                        stuck_now = set(self.to_post_products.keys())
+                        logger.info(f"[循环] 严格模式也无产出，强制跳过: {stuck_now}")
+                        _force_skip_run.update(stuck_now)
+                        self.to_post_products = {}
                     continue
 
             # ============ 检查是否还有空闲岗位，安排特殊餐品或常驻餐品 ============

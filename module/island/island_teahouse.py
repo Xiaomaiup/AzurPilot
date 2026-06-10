@@ -364,6 +364,7 @@ class IslandTeahouse(IslandShopBase):
 
             # ============ 安排基础需求生产（循环直到无空岗或无缺口） ============
             _produced_pass = {}
+            _force_skip_run = set()
 
             self._schedule_and_track(_produced_pass)
 
@@ -372,7 +373,7 @@ class IslandTeahouse(IslandShopBase):
                 for name, qty in _produced_pass.items():
                     self.current_totals[name] = self.current_totals.get(name, 0) + qty
 
-                self._compute_base_demands()
+                self._compute_base_demands(force_skip=_force_skip_run)
                 if not self.to_post_products:
                     logger.info("所有槽位需求已满足")
                     break
@@ -384,7 +385,8 @@ class IslandTeahouse(IslandShopBase):
                 self._schedule_and_track(_produced_pass)
 
                 if sum(_produced_pass.values()) == prev_pass_total and self.to_post_products:
-                    logger.info("[循环] 当前缺口材料不足，切换严格模式扫描后续槽位")
+                    logger.info("[循环] 当前缺口排产失败，切换严格模式扫描")
+
                     self.to_post_products = {}
                     self.current_totals = dict(_orig_totals)
                     for name, qty in _produced_pass.items():
@@ -394,7 +396,15 @@ class IslandTeahouse(IslandShopBase):
                         break
                     self.to_post_products = self.process_meal_requirements(self.to_post_products)
                     logger.info(f"基础需求生产计划（严格模式）: {self.to_post_products}")
+
+                    strict_prev_total = sum(_produced_pass.values())
                     self._schedule_and_track(_produced_pass)
+
+                    if sum(_produced_pass.values()) == strict_prev_total and self.to_post_products:
+                        stuck_now = set(self.to_post_products.keys())
+                        logger.info(f"[循环] 严格模式也无产出，强制跳过: {stuck_now}")
+                        _force_skip_run.update(stuck_now)
+                        self.to_post_products = {}
                     continue
 
             # ============ 检查是否还有空闲岗位，安排特殊餐品或常驻餐品 ============
