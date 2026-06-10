@@ -346,17 +346,9 @@ class IslandRestaurant(IslandShopBase):
                 logger.info(f"剩余基础需求生产计划: {self.to_post_products}")
 
             # ============ 安排基础需求生产（循环直到无空岗或无缺口） ============
-            _produced_pass = {}  # 本轮已生产的累计
+            _produced_pass = {}
 
-            if self.to_post_products:
-                to_post_snapshot = dict(self.to_post_products)
-                self.schedule_production()
-                for name in to_post_snapshot:
-                    remaining = self.to_post_products.get(name, 0)
-                    produced = to_post_snapshot[name] - remaining
-                    if produced > 0:
-                        _produced_pass[name] = _produced_pass.get(name, 0) + produced
-                        self.warehouse_counts[name] = self.warehouse_counts.get(name, 0) + produced
+            self._schedule_and_track(_produced_pass)
 
             while self.get_idle_posts():
                 self.current_totals = dict(_orig_totals)
@@ -372,14 +364,7 @@ class IslandRestaurant(IslandShopBase):
                 logger.info(f"基础需求生产计划: {self.to_post_products}")
 
                 prev_pass_total = sum(_produced_pass.values())
-                to_post_snapshot = dict(self.to_post_products)
-                self.schedule_production()
-                for name in to_post_snapshot:
-                    remaining = self.to_post_products.get(name, 0)
-                    produced = to_post_snapshot[name] - remaining
-                    if produced > 0:
-                        _produced_pass[name] = _produced_pass.get(name, 0) + produced
-                        self.warehouse_counts[name] = self.warehouse_counts.get(name, 0) + produced
+                self._schedule_and_track(_produced_pass)
 
                 if sum(_produced_pass.values()) == prev_pass_total:
                     logger.info("[循环] 本轮无新增生产，退出循环")

@@ -292,6 +292,21 @@ class IslandShopBase(Island, WarehouseOCR):
 
     # ============ 核心逻辑 ============
 
+    def _schedule_and_track(self, produced_pass):
+        """排产并将本轮产出记录到 produced_pass 和 warehouse_counts。
+        produced_pass 跨多次排产累加，让后续 _compute_base_demands 能看到刚生产但未入库的量。
+        """
+        if not self.to_post_products:
+            return
+        to_post_snapshot = dict(self.to_post_products)
+        self.schedule_production()
+        for name in to_post_snapshot:
+            remaining = self.to_post_products.get(name, 0)
+            produced_qty = to_post_snapshot[name] - remaining
+            if produced_qty > 0:
+                produced_pass[name] = produced_pass.get(name, 0) + produced_qty
+                self.warehouse_counts[name] = self.warehouse_counts.get(name, 0) + produced_qty
+
     def _compute_base_demands(self):
         """计算基础需求：严格按槽位顺序处理，找到第一个有缺口的槽位
         即停止，后续槽位本轮不处理。
@@ -386,23 +401,11 @@ class IslandShopBase(Island, WarehouseOCR):
                 logger.info(f"基础需求生产计划: {self.to_post_products}")
 
             # ============ 安排基础需求生产（循环直到无空岗或无缺口） ============
-            _produced_pass = {}  # 本轮已生产的累计 {产品名: 数量}
+            _produced_pass = {}  # 本次 run() 调用中已生产的累计
 
-            if self.to_post_products:
-                to_post_snapshot = dict(self.to_post_products)
-                self.schedule_production()
-                # 记录排产成功的量（同步更新 warehouse_counts，让 get_max_producible 能看到）
-                for name in to_post_snapshot:
-                    remaining = self.to_post_products.get(name, 0)
-                    produced = to_post_snapshot[name] - remaining
-                    if produced > 0:
-                        _produced_pass[name] = _produced_pass.get(name, 0) + produced
-                        self.warehouse_counts[name] = self.warehouse_counts.get(name, 0) + produced
+            self._schedule_and_track(_produced_pass)
 
-            # 循环：还有空岗就继续找下一个缺口
             while self.get_idle_posts():
-                # 用原始库存 + 已生产量 重建 current_totals
-                #（刚生产的东西还在产线上，没入仓库，但下轮 compute 应该当它们存在）
                 self.current_totals = dict(_orig_totals)
                 for name, qty in _produced_pass.items():
                     self.current_totals[name] = self.current_totals.get(name, 0) + qty
@@ -416,16 +419,8 @@ class IslandShopBase(Island, WarehouseOCR):
                 logger.info(f"基础需求生产计划: {self.to_post_products}")
 
                 prev_pass_total = sum(_produced_pass.values())
-                to_post_snapshot = dict(self.to_post_products)
-                self.schedule_production()
-                for name in to_post_snapshot:
-                    remaining = self.to_post_products.get(name, 0)
-                    produced = to_post_snapshot[name] - remaining
-                    if produced > 0:
-                        _produced_pass[name] = _produced_pass.get(name, 0) + produced
-                        self.warehouse_counts[name] = self.warehouse_counts.get(name, 0) + produced
+                self._schedule_and_track(_produced_pass)
 
-                # 本轮无新增生产 → 再循环也不会改变结果，退出防止死循环
                 if sum(_produced_pass.values()) == prev_pass_total:
                     logger.info("[循环] 本轮无新增生产，退出循环")
                     break
@@ -667,12 +662,12 @@ class IslandShopBase(Island, WarehouseOCR):
                     continue
                 max_by_material = material_stock // quantity_per
                 if max_by_material <= 0:
-                    if skip_zero_materials:
-                        # 需求计算阶段：不阻断，留给 process_meal_requirements 分解
-                        logger.info(f"  {product} 原材料 {material} 库存不足（库存: {material_stock}），需求计算阶段跳过此原料限制")
+                    if skip_zero_materials and material_stock == 0:
+                        # 需求计算阶段且真零库存：不阻断，留给 process_meal_requirements 分解
+                        logger.info(f"  {product} 原材料 {material} 库存为 0，需求计算阶段跳过此原料限制")
                         continue
                     else:
-                        # 排产阶段：严格检查，库存为 0 时不能生产套餐
+                        # 排产阶段 或 有但不满足一批：严格处理
                         logger.info(f"  {product} 缺少原材料: {material} (库存: {material_stock})")
                         return 0
                 max_producible = min(max_producible, max_by_material)
