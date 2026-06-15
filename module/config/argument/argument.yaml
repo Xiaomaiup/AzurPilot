@@ -709,6 +709,7 @@ GeneralShop:
   Refresh: false
   BuySkinBox: false
   ConsumeCoins: false
+  OverflowCoins: 0
   Filter: |-
     BookRedT3 > BookYellowT3 > BookBlueT3 > BookRedT2
     > Cube

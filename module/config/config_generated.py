@@ -403,6 +403,7 @@ class GeneratedConfig:
     GeneralShop_Refresh = False
     GeneralShop_BuySkinBox = False
     GeneralShop_ConsumeCoins = False
+    GeneralShop_OverflowCoins = 0
     GeneralShop_Filter = 'BookRedT3 > BookYellowT3 > BookBlueT3 > BookRedT2\n> Cube\n> FoodT6 > FoodT5'
 
     # 配置组 `GuildShop`

@@ -4,6 +4,7 @@ from module.shop.base import ShopItemGrid, ShopItemGrid_250814
 from module.shop.clerk import ShopClerk
 from module.shop.shop_status import ShopStatus
 from module.shop.ui import ShopUI
+from module.ui.page import page_meowfficer
 
 
 class GeneralShop_250814(ShopClerk, ShopUI, ShopStatus):
@@ -129,12 +130,52 @@ class GeneralShop_250814(ShopClerk, ShopUI, ShopStatus):
 
         return False
 
+    def _meowfficer_overflow_buy(self):
+        """金币溢出时自动购买猫箱。
+
+        当金币超过 OverflowCoins 阈值时，导航到指挥喵界面购买猫箱，
+        直到金币降至阈值以下或达到每日15个购买限制。
+        阈值范围 1-600000，超出范围视为无效并跳过功能。
+
+        Pages: in: page_shop, out: page_main
+        """
+        overflow_coins = self.config.GeneralShop_OverflowCoins
+
+        # 阈值验证：必须 > 0 且 <= 600000
+        if overflow_coins <= 0 or overflow_coins > 600000:
+            logger.info(f'OverflowCoins={overflow_coins}, invalid range (1-600000), skip meowfficer overflow buy')
+            return
+
+        # 重新OCR识别金币（购买消耗物资后金币可能已变化）
+        self.shop_currency()
+        if self._currency <= overflow_coins:
+            logger.info(f'Gold coins {self._currency} <= OverflowCoins {overflow_coins}, skip meowfficer overflow buy')
+            return
+
+        logger.hr('Meowfficer overflow buy', level=1)
+        logger.info(f'Gold coins {self._currency} > OverflowCoins {overflow_coins}, trigger meowfficer overflow buy')
+
+        # 导航到指挥喵界面
+        self.ui_goto(page_meowfficer)
+
+        # 等待界面加载完成
+        from module.meowfficer.buy import MeowfficerBuy
+        meow = MeowfficerBuy(config=self.config, device=self.device)
+        meow.wait_meowfficer_buttons()
+
+        # 执行猫箱溢出购买
+        meow.meow_overflow_buy(overflow_coins=overflow_coins)
+
+        # 返回主界面
+        self.ui_goto_main()
+
     def run(self):
         """运行通用商店购买流程。
 
         Pages: in: page_shop (general shop tab)
 
         按照过滤器配置购买通用商店商品，支持刷新。
+        购买完成后，若金币超过溢出阈值则自动购买猫箱。
         """
         if not self.shop_filter:
             return
@@ -150,3 +191,6 @@ class GeneralShop_250814(ShopClerk, ShopUI, ShopStatus):
             if refresh and self.shop_refresh():
                 continue
             break
+
+        # 金币溢出购买猫箱
+        self._meowfficer_overflow_buy()
