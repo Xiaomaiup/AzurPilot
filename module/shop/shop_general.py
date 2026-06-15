@@ -108,8 +108,8 @@ class GeneralShop_250814(ShopClerk, ShopUI, ShopStatus):
     def shop_check_custom_item(self, item):
         """检查自定义商品是否满足特定购买条件。
 
-        处理需要特殊判断的商品，如金币余额超过 550000 时
-        自动购买金币商品，或购买装备外观箱。
+        处理需要特殊判断的商品，如物资超过 ConsumeCoins 阈值时
+        自动购买消耗物资的商品，或购买装备外观箱。
 
         Args:
             item: 待检查的商品对象
@@ -117,9 +117,12 @@ class GeneralShop_250814(ShopClerk, ShopUI, ShopStatus):
         Returns:
             bool: 是否为满足条件的自定义商品
         """
-        if self.config.GeneralShop_ConsumeCoins and self._currency >= 550000:
-            if item.cost == 'Coins':
-                return True
+        consume_coins = self.config.GeneralShop_ConsumeCoins
+        # 阈值验证：必须 > 0 且 <= 600000
+        if consume_coins > 0 and consume_coins <= 600000:
+            if self._currency >= consume_coins:
+                if item.cost == 'Coins':
+                    return True
 
         if self.config.GeneralShop_BuySkinBox:
             if (not item.is_known_item()) and item.amount == 1 and item.cost == 'Coins' and item.price == 7000:
