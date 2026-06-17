@@ -58,7 +58,6 @@ class CampaignBase(CampaignBase_):
         Fixed number of scrolls until give up, may need to
         increase as more war archives campaigns are added
         """
-        loading_checked = False
         for _ in range(20):
             if skip_first_screenshot:
                 skip_first_screenshot = False
@@ -72,24 +71,13 @@ class CampaignBase(CampaignBase_):
             # before starting next search attempt
             while not self.appear(WAR_ARCHIVES_CHECK):
                 self.ui_ensure(destination=page_archives)
-                loading_checked = False
 
-            # check entrance first, because game can remember last scrolling position
-            # if you stays at page_campaign_menu
-            # and bypass _archives_loading_complete if reached entrance
+            while not self._archives_loading_complete():
+                self.device.screenshot()
+
             entrance = self._get_archives_entrance(name)
             if entrance is not None:
                 return entrance
-
-            if not loading_checked:
-                # _archives_loading_complete might take 1~2s if archive list is not at top
-                while not self._archives_loading_complete():
-                    self.device.screenshot()
-                loading_checked = True
-
-                entrance = self._get_archives_entrance(name)
-                if entrance is not None:
-                    return entrance
 
             if WAR_ARCHIVES_SCROLL.appear(main=self):
                 if WAR_ARCHIVES_SCROLL.at_bottom(main=self):
