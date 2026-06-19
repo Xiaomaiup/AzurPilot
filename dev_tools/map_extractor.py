@@ -8,7 +8,7 @@ from module.logger import logger
 from module.map.utils import *
 
 """
-This an auto-tool to extract map files used in AzurPilot.
+This an auto-tool to extract map files used in Alas.
 """
 
 DIC_SIREN_NAME_CHI_TO_ENG = {
@@ -317,16 +317,6 @@ DIC_SIREN_NAME_CHI_TO_ENG = {
     'unknownV_boss_hermit': 'Vboss_Hermit',
     'unknownV_boss_lovers': 'Vboss_Lovers',
     'unknownV_boss_chariot': 'Vboss_Chariot',
-
-    # Vacation Lane – Beachside Brilliance (event_20260417_cn)
-    'bulaimodun': 'Bremerton',
-    'fushun_g': 'FuShunG',
-    'lafeier': 'Raffaello',
-    'huangjiafangzhou_g': 'ArkRoyal',
-    'chaijun': 'Cheshire',
-    'naximofu': 'Nakhimov',
-    'liekexingdunII': 'Lexington2',
-    'yuekechengII': 'Yorktown2',
 }
 
 
@@ -605,11 +595,6 @@ class MapData:
         lines.append(f'    MAP_HAS_FLEET_STEP = {self.MAP_HAS_FLEET_STEP}')
         lines.append(f'    MAP_HAS_AMBUSH = {self.MAP_HAS_AMBUSH}')
         lines.append(f'    MAP_HAS_MYSTERY = {self.MAP_HAS_MYSTERY}')
-        lines.append(f'    MAP_CHAPTER_SWITCH_20260326 = True')
-        lines.append(f"    STAGE_ENTRANCE = ['half', '20240725']")
-        lines.append(f'    MAP_HAS_MODE_SWITCH = True')
-        lines.append(f'    STAGE_INCREASE_AB = True')
-        lines.append(f'    MAP_WALK_USE_CURRENT_FLEET = True')
         if self.MAP_HAS_PORTAL:
             lines.append(f'    MAP_HAS_PORTAL = {self.MAP_HAS_PORTAL}')
         if self.MAP_HAS_LAND_BASED:
@@ -711,7 +696,7 @@ class ChapterTemplate:
         if isinstance(name, str):
             maps = []
             for map_id, data in DATA.items():
-                if not isinstance(map_id, int) or not isinstance(data, dict) or is_extra(data['chapter_name']):
+                if not isinstance(map_id, int) or is_extra(data['chapter_name']):
                     continue
                 if not re.search(name, data['name']):
                     continue
@@ -737,7 +722,7 @@ class ChapterTemplate:
             event_id = get_event_id(maps[0].map_id)
             new = []
             for map_id, data in DATA.items():
-                if not isinstance(map_id, int) or not isinstance(data, dict) or is_extra(data['chapter_name']):
+                if not isinstance(map_id, int) or is_extra(data['chapter_name']):
                     continue
                 if get_event_id(data['id']) == event_id:
                     data = MapData(data, DATA_LOOP.get(map_id, None))
@@ -769,7 +754,7 @@ class ChapterTemplate:
 
 
 """
-This an auto-tool to extract map files used in AzurPilot.
+This an auto-tool to extract map files used in Alas.
 
 Git clone https://github.com/AzurLaneTools/AzurLaneLuaScripts, to get the decrypted scripts.
 Arguments:
@@ -784,8 +769,8 @@ Arguments:
                      adapted for war_archives usage
 """
 FILE = '../AzurLaneLuaScripts'
-FOLDER = './campaign/event_20260430_cn'
-KEYWORD = '1910001'
+FOLDER = './campaign/test'
+KEYWORD = ''
 SELECT = True
 OVERWRITE = True
 IS_WAR_ARCHIVES = False
