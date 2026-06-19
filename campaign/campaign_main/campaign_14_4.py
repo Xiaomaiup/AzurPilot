@@ -107,10 +107,9 @@ class Campaign(CampaignBase):
 
     def map_data_init(self, map_):
         super().map_data_init(map_)
-        if not self.map_is_clear_mode:
-            for override_grid in OVERRIDE:
-                # Set may_enemy, but keep may_ambush
-                self.map[override_grid.location].may_enemy = override_grid.may_enemy
+        for override_grid in OVERRIDE:
+            # Set may_enemy, but keep may_ambush
+            self.map[override_grid.location].may_enemy = override_grid.may_enemy
 
     def battle_0(self):
         self.pick_up_light_house(A9)
