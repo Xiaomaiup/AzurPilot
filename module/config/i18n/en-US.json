@@ -3482,6 +3482,10 @@
       "name": "Shrimp Stock Threshold",
       "help": ""
     },
+    "MinCrayfish": {
+      "name": "Crayfish Stock Threshold",
+      "help": ""
+    },
     "MinCrab": {
       "name": "Crab Stock Threshold",
       "help": ""
@@ -4013,6 +4017,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4029,6 +4034,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4045,6 +4051,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4061,6 +4068,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4077,6 +4085,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4093,6 +4102,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4109,6 +4119,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4125,6 +4136,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -4147,6 +4159,7 @@
       "carrot_omelette": "Carrot Omelette",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     }
@@ -5183,6 +5196,7 @@
       "roasted_skewer": "Grilled Skewers",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -5193,6 +5207,7 @@
       "roasted_skewer": "Grilled Skewers",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -5203,6 +5218,7 @@
       "roasted_skewer": "Grilled Skewers",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -5213,6 +5229,7 @@
       "roasted_skewer": "Grilled Skewers",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
@@ -5223,6 +5240,7 @@
       "roasted_skewer": "Grilled Skewers",
       "stir_fried_chicken": "Stir-Fried Chicken",
       "steak_bowl": "Steak Bowl",
+      "crayfish_stir_fry": "Crayfish Stir-Fry",
       "carnival": "BBQ Carnival",
       "double_energy": "Double Energy Combo"
     },
