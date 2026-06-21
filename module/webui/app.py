@@ -3306,7 +3306,8 @@ class AlasGUI(Frame):
                         deep_set(config, p, "")
             for k, v in modified.copy().items():
                 valuetype = deep_get(self.ALAS_ARGS, k + ".valuetype")
-                v = parse_pin_value(v, valuetype)
+                widget_type = deep_get(self.ALAS_ARGS, k + ".type")
+                v = parse_pin_value(v, valuetype, widget_type)
                 validate = deep_get(self.ALAS_ARGS, k + ".validate")
                 if not len(str(v)):
                     default = deep_get(self.ALAS_ARGS, k + ".value")
@@ -5147,4 +5148,3 @@ def app():
     app.mount("/mcp", mcp_app)
 
     return app
-

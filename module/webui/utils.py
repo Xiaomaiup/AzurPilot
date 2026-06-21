@@ -438,7 +438,7 @@ str2type = {
 }
 
 
-def parse_pin_value(val, valuetype: str = None):
+def parse_pin_value(val, valuetype: str = None, widget_type: str = None):
     """
     解析 pin 组件的值。
 
@@ -449,11 +449,13 @@ def parse_pin_value(val, valuetype: str = None):
     # 处理 dict 类型 - 提取 'value' 字段并递归解析
     if isinstance(val, dict):
         if 'value' in val:
-            return parse_pin_value(val['value'], valuetype)
+            return parse_pin_value(val['value'], valuetype, widget_type)
         else:
             # 无 'value' 键时原样返回 dict
             return val
     elif isinstance(val, list):
+        if widget_type == 'checkbox':
+            return any(bool(v) for v in val)
         if valuetype == 'ignore':
             if len(val) == 0:
                 return False

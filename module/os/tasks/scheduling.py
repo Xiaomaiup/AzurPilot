@@ -84,6 +84,15 @@ class CoinTaskMixin:
     # 短猫相接任务名称
     TASK_NAME_MEOWFFICER_FARMING = 'OpsiMeowfficerFarming'
     AP_NOTIFY_MIN_INTERVAL_MINUTES = 30
+
+    def _config_enabled(self, keys, default=False):
+        """
+        严格读取布尔配置，兼容 WebUI checkbox 历史值 [] / [True]。
+        """
+        value = self.config.cross_get(keys=keys, default=default)
+        if isinstance(value, list):
+            return any(bool(item) for item in value)
+        return value is True
     
     # ==================== 推送通知相关方法 ====================
     
@@ -311,7 +320,7 @@ class CoinTaskMixin:
         # 如果未启用智能调度，或者未开启黄币控制开关，则禁用黄币返回检查
         # 此时任务会一直运行到行动力不足（即传统模式）
         smart_enabled = is_smart_scheduling_enabled(self.config)
-        use_smart_preserve = self.config.cross_get(
+        use_smart_preserve = self._config_enabled(
             keys=self.CONFIG_PATH_USE_SMART_CL1_PRESERVE
         )
         
@@ -351,7 +360,7 @@ class CoinTaskMixin:
             int: 保留的黄币数量
         """
         # 检查是否启用智能调度黄币保留配置
-        use_smart_preserve = self.config.cross_get(
+        use_smart_preserve = self._config_enabled(
             keys=self.CONFIG_PATH_USE_SMART_CL1_PRESERVE
         )
         
@@ -480,7 +489,7 @@ class CoinTaskMixin:
         }
         
         for task_name, config_path in task_config_map.items():
-            if self.config.cross_get(keys=config_path):
+            if self._config_enabled(keys=config_path):
                 enabled_tasks.append(task_name)
         
         return enabled_tasks
