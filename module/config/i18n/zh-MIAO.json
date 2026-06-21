@@ -3303,6 +3303,16 @@
       "name": "短猫相接 保留 X 点行动力 (´；ω；｀)",
       "help": "行动力< X 后停止，自动开箱，X含箱内行动力。建议保留1000给侵蚀1练级喵。"
     },
+    "ActionPointEarlyTriggerEnable": {
+      "name": "行动力提前调度",
+      "help": "启用后根据上次大世界行动力快照和每 10 分钟回复 1 点行动力估算当前行动力；达到阈值时提前运行智能调度，避免紧急委托等高优先任务期间行动力溢出喵。",
+      "True": "True",
+      "False": "False"
+    },
+    "ActionPointEarlyTriggerThreshold": {
+      "name": "提前调度行动力阈值",
+      "help": "估算行动力达到 X 时提前触发智能调度。默认 200，适合在行动力接近自然上限时提前开始大世界 71 或短猫喵。"
+    },
     "OperationCoinsReturnThreshold": {
       "name": "获取 X 个作战补给凭证 (黄币任务) (｡•̀ᴗ-)✧",
       "help": "黄币获取任务中共获取(增加)X个凭证后返回侵蚀1练级喵。"
@@ -5966,6 +5976,8 @@
       "UseSmartSchedulingOperationCoinsPreserve": "获取X个凭证喵",
       "OperationCoinsPreserve": "侵蚀1保留凭证喵",
       "ActionPointPreserve": "短猫保留行动力喵",
+      "ActionPointEarlyTriggerEnable": "行动力提前调度喵",
+      "ActionPointEarlyTriggerThreshold": "提前调度行动力阈值喵",
       "OperationCoinsReturnThreshold": "补充凭证至X喵",
       "EnableMeowfficerFarming": "短猫开关喵",
       "EnableObscure": "隐秘开关喵",

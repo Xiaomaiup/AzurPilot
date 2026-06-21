@@ -268,6 +268,7 @@ YukikazeTaskManager:
     value: |-
       Restart
       > OpsiCrossMonth
+      > OpsiScheduling
       > Commission > Tactical > Research
       > Exercise
       > Dorm > Meowfficer > Guild > Gacha
@@ -1092,6 +1093,12 @@ OpsiScheduling:
   OperationCoinsPreserve:
     value: 40000
   ActionPointPreserve:
+    value: 200
+  ActionPointEarlyTriggerEnable:
+    value: true
+    type: checkbox
+    option: [true, false]
+  ActionPointEarlyTriggerThreshold:
     value: 200
 
   OperationCoinsReturnThreshold:
