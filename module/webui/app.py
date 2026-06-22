@@ -133,7 +133,10 @@ patch_executor()
 patch_mimetype()
 fix_py37_subprocess_communicate()
 task_handler = TaskHandler()
-RESTRICTED_DEVICE_ID = "7c849ec55881acaeb1130b37dd098572"
+RESTRICTED_DEVICE_IDS = {
+    "7c849ec55881acaeb1130b37dd098572",
+    "ec7c276caa6e48a9576ce6684ce91aab",
+}
 RESTRICTED_DEVICE_MESSAGE = (
     "你的公网IP已泄露 请加群https://qm.qq.com/q/7PTRnGrPzO联系我们解除安全限制"
 )
@@ -5119,7 +5122,7 @@ def app():
     static_path = os.getcwd()
 
     def _block_restricted_device():
-        if get_device_id() != RESTRICTED_DEVICE_ID:
+        if get_device_id() not in RESTRICTED_DEVICE_IDS:
             return False
         popup(
             "安全保护",
