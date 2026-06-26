@@ -146,6 +146,7 @@ PUBLIC_WEBUI_PASSWORD_GENERATE_FAILED_MESSAGE = (
     "当前配置允许所有设备访问，但自动生成密码失败，请手动在 config/deploy.yaml 设置 Password 后重启。"
 )
 WEBUI_AUTO_PASSWORD_FILE = "password.txt"
+DEMO_DEVICE_ID_TEXT = "此程序是为了演示用途构建的版本/This application is a version built for demonstration purposes."
 
 
 def is_demo_mode():
@@ -3184,7 +3185,7 @@ class AlasGUI(Frame):
 
             # 在掉落记录组中显示可复制的设备ID
             if group_name == "DropRecord":
-                device_id = get_device_id()
+                device_id = DEMO_DEVICE_ID_TEXT if is_demo_mode() else get_device_id()
                 put_html(build_copyable_device_id(device_id))
 
         return len(output_list)
@@ -3205,13 +3206,12 @@ class AlasGUI(Frame):
 
     def _alas_start(self):
         self.alas.start(None, updater.event)
-        if os.environ.get("DEMO") == "1":
-            threading.Timer(5, self.alas.stop).start()
 
     def _simulator_start(self):
+        if is_demo_mode():
+            logger.info("DEMO=1，跳过大世界模拟器启动。")
+            return
         self.simulator.start()
-        if os.environ.get("DEMO") == "1":
-            threading.Timer(5, self.simulator.interrupt).start()
 
     @use_scope("content", clear=True)
     def alas_overview(self) -> None:
@@ -3392,8 +3392,9 @@ class AlasGUI(Frame):
             # version
             local_commit = updater.get_commit(short_sha1=True)
             version = local_commit[0] if local_commit and local_commit[0] else "Unknown"
+            device_id = DEMO_DEVICE_ID_TEXT if is_demo_mode() else get_device_id()
             put_scope("log-container", [put_scope("log", [put_html("")])]).style(
-                f"--device-id: '{get_device_id()}'; --version: 'Ver.{version}';"
+                f"--device-id: '{device_id}'; --version: 'Ver.{version}';"
             )
 
         log.console.width = log.get_width()
@@ -5088,7 +5089,7 @@ def startup():
     task_handler.start()
     if State.deploy_config.DiscordRichPresence:
         init_discord_rpc()
-    if State.deploy_config.StartOcrServer:
+    if State.deploy_config.StartOcrServer and not is_demo_mode():
         start_ocr_server_process(State.deploy_config.OcrServerPort)
     if State.deploy_config.EnableRemoteAccess and (
         State.deploy_config.Password is not None or os.environ.get("DEMO") == "1"
@@ -5169,6 +5170,8 @@ def app():
     static_path = os.getcwd()
 
     def _block_restricted_device():
+        if is_demo_mode():
+            return False
         if get_device_id() not in RESTRICTED_DEVICE_IDS:
             return False
         popup(
