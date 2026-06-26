@@ -34,4 +34,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN git config --system --add safe.directory /app/AzurPilot
+
 CMD ["uv", "run", "python", "gui.py"]
