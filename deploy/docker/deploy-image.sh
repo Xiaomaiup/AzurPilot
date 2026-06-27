@@ -11,7 +11,7 @@ DEFAULT_WEBUI_PORT=25548
 APP_WORKDIR="/app/AzurPilot"
 VENV_VOLUME="${CONTAINER}-venv"
 AP_DOCKER_CONFIG="${AP_DOCKER_CONFIG:-${HOME}/.azurpilot/docker}"
-TOTAL_STEPS=7
+TOTAL_STEPS=8
 CURRENT_STEP=0
 LANGUAGE="${LANGUAGE:-}"
 
@@ -36,6 +36,7 @@ t() {
         en:port_title) printf 'WebUI port\n' ;;
         en:port_prompt) printf 'External port, default %s: ' "${DEFAULT_WEBUI_PORT}" ;;
         en:port_invalid) printf 'Invalid port, using default %s.\n' "${DEFAULT_WEBUI_PORT}" ;;
+        en:working) printf 'Working' ;;
         en:base_tools) printf 'Preparing base tools\n' ;;
         en:docker_check) printf 'Checking Docker\n' ;;
         en:docker_config) printf 'Preparing Docker client config\n' ;;
@@ -56,6 +57,10 @@ t() {
         en:source_dir) printf 'Source\n' ;;
         en:public_url) printf 'Public URL\n' ;;
         en:private_url) printf 'Private URL\n' ;;
+        en:webui_password) printf 'WebUI password\n' ;;
+        en:no_password) printf 'Not set\n' ;;
+        en:wait_webui) printf 'Waiting for WebUI startup\n' ;;
+        en:webui_timeout) printf 'WebUI startup timed out. Recent logs:\n' ;;
         en:unsupported_docker) printf 'Unsupported system. Please install Docker manually and rerun this script.\n' ;;
         en:unsupported_tools) printf 'Unsupported system. Please install git and curl manually and rerun this script.\n' ;;
         en:missing_command) printf 'Missing command: %s\n' "${2:-}" ;;
@@ -69,6 +74,7 @@ t() {
         zh:port_title) printf 'WebUI 端口\n' ;;
         zh:port_prompt) printf '对外端口，默认 %s：' "${DEFAULT_WEBUI_PORT}" ;;
         zh:port_invalid) printf '端口无效，使用默认 %s。\n' "${DEFAULT_WEBUI_PORT}" ;;
+        zh:working) printf '正在处理' ;;
         zh:base_tools) printf '准备基础工具\n' ;;
         zh:docker_check) printf '检查 Docker\n' ;;
         zh:docker_config) printf '准备 Docker 客户端配置\n' ;;
@@ -89,6 +95,10 @@ t() {
         zh:source_dir) printf '源码目录\n' ;;
         zh:public_url) printf '公网访问\n' ;;
         zh:private_url) printf '内网访问\n' ;;
+        zh:webui_password) printf 'WebUI 密码\n' ;;
+        zh:no_password) printf '未设置\n' ;;
+        zh:wait_webui) printf '等待 WebUI 完全启动\n' ;;
+        zh:webui_timeout) printf '等待 WebUI 启动超时，最近日志如下：\n' ;;
         zh:unsupported_docker) printf '当前系统暂不支持自动安装 Docker，请手动安装后重试。\n' ;;
         zh:unsupported_tools) printf '当前系统暂不支持自动安装基础工具，请手动安装 git 和 curl 后重试。\n' ;;
         zh:missing_command) printf '缺少命令：%s\n' "${2:-}" ;;
@@ -183,19 +193,11 @@ choose_port() {
     fi
 }
 
-progress_bar() {
-    local width=28
-    local filled=$((CURRENT_STEP * width / TOTAL_STEPS))
-    local empty=$((width - filled))
-    printf '['
-    printf '%*s' "${filled}" '' | tr ' ' '#'
-    printf '%*s' "${empty}" '' | tr ' ' '-'
-    printf ']'
-}
-
 step() {
     CURRENT_STEP=$((CURRENT_STEP + 1))
-    printf '\n%b%s %s%b %s\n' "${CYAN}" "$(progress_bar)" "(${CURRENT_STEP}/${TOTAL_STEPS})" "${RESET}" "$1"
+    clear_screen
+    print_header
+    printf '\n%b(%s/%s)%b %s\n' "${CYAN}" "${CURRENT_STEP}" "${TOTAL_STEPS}" "${RESET}" "$1"
 }
 
 info() {
@@ -213,6 +215,45 @@ warn() {
 fail() {
     printf '%bERROR%b %s\n' "${RED}" "${RESET}" "$*" >&2
     exit 1
+}
+
+run_with_spinner() {
+    local message="$1"
+    shift
+
+    if [ ! -t 1 ]; then
+        "$@"
+        return
+    fi
+
+    local spin='|/-\'
+    local index=0
+    local status=0
+    local tmp
+    tmp="$(mktemp)"
+
+    set +e
+    "$@" >"${tmp}" 2>&1 &
+    local pid=$!
+
+    while kill -0 "${pid}" 2>/dev/null; do
+        printf '\r%b%s%b %s %s' "${CYAN}" "${spin:index++%4:1}" "${RESET}" "${message}" "$(t working)"
+        sleep 0.12
+    done
+
+    wait "${pid}"
+    status=$?
+    set -e
+
+    printf '\r%*s\r' 80 ''
+    if [ "${status}" -eq 0 ]; then
+        success "${message}"
+    else
+        cat "${tmp}" >&2
+        rm -f "${tmp}"
+        return "${status}"
+    fi
+    rm -f "${tmp}"
 }
 
 require_command() {
@@ -238,7 +279,7 @@ run_as_owner() {
 }
 
 git_cmd() {
-    run_as_owner git -c "safe.directory=${APP_DIR}" "$@"
+    run_as_owner env GIT_PROGRESS_DELAY=0 git -c "safe.directory=${APP_DIR}" "$@"
 }
 
 confirm_docker_install() {
@@ -376,6 +417,46 @@ get_private_ip() {
     t ip_failed
 }
 
+read_webui_password() {
+    local password_file="${APP_DIR}/password.txt"
+    local deploy_file="${APP_DIR}/config/deploy.yaml"
+    local password=""
+
+    if [ -f "${password_file}" ]; then
+        password="$(sed -n '1p' "${password_file}" | tr -d '\r\n')"
+    fi
+    if [ -z "${password}" ] && [ -f "${deploy_file}" ]; then
+        password="$(sed -n 's/^[[:space:]]*Password[[:space:]]*:[[:space:]]*//p' "${deploy_file}" \
+            | sed -n '1p' \
+            | sed 's/[[:space:]]*$//; s/^["'\'']//; s/["'\'']$//' \
+            | grep -iv '^null$' || true)"
+    fi
+
+    if [ -n "${password}" ]; then
+        printf '%s\n' "${password}"
+    else
+        t no_password
+    fi
+}
+
+wait_webui_ready() {
+    local waited=0
+    local timeout=120
+    local url="http://127.0.0.1:${WEBUI_PORT}"
+
+    while [ "${waited}" -lt "${timeout}" ]; do
+        if docker_cmd logs --tail 80 "${CONTAINER}" 2>/dev/null | grep -q "Uvicorn running"; then
+            return 0
+        fi
+        if curl -fsS --max-time 2 "${url}" >/dev/null 2>&1; then
+            return 0
+        fi
+        sleep 2
+        waited=$((waited + 2))
+    done
+    return 1
+}
+
 print_urls() {
     local label="$1"
     local ips="$2"
@@ -404,7 +485,7 @@ clear_screen
 print_header
 
 step "$(t base_tools)"
-install_base_tools
+run_with_spinner "$(t base_tools)" install_base_tools
 require_command git
 require_command curl
 
@@ -412,17 +493,17 @@ step "$(t docker_check)"
 install_docker
 
 step "$(t docker_start)"
-start_docker
+run_with_spinner "$(t docker_start)" start_docker
 prepare_docker_config
 
 step "$(t source)"
 if [ -d "${APP_DIR}/.git" ]; then
     info "$(t source_update)"
-    git_cmd -C "${APP_DIR}" fetch --all --prune --progress
-    git_cmd -C "${APP_DIR}" pull --ff-only
+    git_cmd -C "${APP_DIR}" fetch --all --prune --verbose --progress
+    git_cmd -C "${APP_DIR}" pull --ff-only --verbose --progress
 else
     info "$(t source_clone)"
-    git_cmd clone --progress "${REPOSITORY}" "${APP_DIR}"
+    git_cmd clone --verbose --progress "${REPOSITORY}" "${APP_DIR}"
 fi
 
 step "$(t image_pull)"
@@ -430,13 +511,13 @@ docker_cmd pull "${IMAGE}"
 
 step "$(t container_cleanup)"
 if docker_cmd ps -a --format '{{.Names}}' | grep -Fxq "${CONTAINER}"; then
-    docker_cmd rm -f "${CONTAINER}"
+    run_with_spinner "$(t container_cleanup)" docker_cmd rm -f "${CONTAINER}"
 else
     success "${CONTAINER}"
 fi
 
 step "$(t container_start)"
-docker_cmd run -d \
+run_with_spinner "$(t container_start)" docker_cmd run -d \
     --name "${CONTAINER}" \
     --restart unless-stopped \
     -p "${WEBUI_PORT}:${WEBUI_PORT}" \
@@ -452,12 +533,20 @@ if [ "$(docker_cmd inspect -f '{{.State.Running}}' "${CONTAINER}" 2>/dev/null ||
     exit 1
 fi
 
+run_with_spinner "$(t wait_webui)" wait_webui_ready || {
+    warn "$(t webui_timeout)"
+    docker_cmd logs --tail 120 "${CONTAINER}" || true
+    exit 1
+}
+
 step "$(t network)"
 PUBLIC_IP="$(get_public_ip)"
 PRIVATE_IP="$(get_private_ip)"
+WEBUI_PASSWORD="$(read_webui_password)"
 
 printf '\n%b%s%b\n' "${BOLD}${GREEN}" "$(t done)" "${RESET}"
 printf '%-12s: %s\n' "$(t container)" "${CONTAINER}"
 printf '%-12s: %s\n' "$(t source_dir)" "${APP_DIR}"
+printf '%-12s: %s\n' "$(t webui_password)" "${WEBUI_PASSWORD}"
 print_urls "$(t public_url)" "${PUBLIC_IP}"
 print_urls "$(t private_url)" "${PRIVATE_IP}"
