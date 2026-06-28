@@ -5599,6 +5599,36 @@
     "ShipLimit": {
       "name": "處理艦船上限",
       "help": "0 表示一直處理到無法切換下一艘；除錯時可設定為 1 或其他較小數量。"
+    },
+    "EnableSlot1": {
+      "name": "更換第 1 個裝備",
+      "help": "啟用後，僅當第 1 個裝備位為空時嘗試自動裝備。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot2": {
+      "name": "更換第 2 個裝備",
+      "help": "啟用後，僅當第 2 個裝備位為空時嘗試自動裝備。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot3": {
+      "name": "更換第 3 個裝備",
+      "help": "啟用後，僅當第 3 個裝備位為空時嘗試自動裝備。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot4": {
+      "name": "更換第 4 個裝備",
+      "help": "啟用後，僅當第 4 個裝備位為空時嘗試自動裝備。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot5": {
+      "name": "更換第 5 個裝備",
+      "help": "啟用後，僅當第 5 個裝備位為空時嘗試自動裝備。",
+      "True": "True",
+      "False": "False"
     }
   },
   "Benchmark": {

@@ -5599,6 +5599,36 @@
     "ShipLimit": {
       "name": "处理舰船上限喵",
       "help": "0 表示一直处理到无法切换下一艘；调试时可设置为 1 或其他较小数量喵。"
+    },
+    "EnableSlot1": {
+      "name": "更换第 1 个装备喵",
+      "help": "启用后，仅当第 1 个装备位为空时尝试自动装备喵。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot2": {
+      "name": "更换第 2 个装备喵",
+      "help": "启用后，仅当第 2 个装备位为空时尝试自动装备喵。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot3": {
+      "name": "更换第 3 个装备喵",
+      "help": "启用后，仅当第 3 个装备位为空时尝试自动装备喵。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot4": {
+      "name": "更换第 4 个装备喵",
+      "help": "启用后，仅当第 4 个装备位为空时尝试自动装备喵。",
+      "True": "True",
+      "False": "False"
+    },
+    "EnableSlot5": {
+      "name": "更换第 5 个装备喵",
+      "help": "启用后，仅当第 5 个装备位为空时尝试自动装备喵。",
+      "True": "True",
+      "False": "False"
     }
   },
   "Benchmark": {

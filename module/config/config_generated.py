@@ -962,6 +962,11 @@ class GeneratedConfig:
 
     # 配置组 `AutoEquip`
     AutoEquip_ShipLimit = 0
+    AutoEquip_EnableSlot1 = True  # True, False
+    AutoEquip_EnableSlot2 = True  # True, False
+    AutoEquip_EnableSlot3 = True  # True, False
+    AutoEquip_EnableSlot4 = True  # True, False
+    AutoEquip_EnableSlot5 = True  # True, False
 
     # 配置组 `Benchmark`
     Benchmark_DeviceType = 'emulator'  # emulator, plone_cloud_with_adb, phone_cloud_without_adb, android_phone, android_phone_vmos
