@@ -1824,6 +1824,10 @@ BoxDisassemble:
   BlueBoxLimit: 1000
   UseWhiteBox: true
   WhiteBoxLimit: 2000
+AutoEquip:
+  ShipLimit:
+    value: 0
+    validate: [0, 9999]
 Benchmark:
   DeviceType:
     value: emulator

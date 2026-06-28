@@ -3300,6 +3300,14 @@
       "Storage": {}
     }
   },
+  "AutoEquip": {
+    "AutoEquip": {
+      "ShipLimit": 0
+    },
+    "Storage": {
+      "Storage": {}
+    }
+  },
   "Benchmark": {
     "Benchmark": {
       "DeviceType": "emulator",

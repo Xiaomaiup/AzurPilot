@@ -17013,6 +17013,26 @@
       }
     }
   },
+  "AutoEquip": {
+    "AutoEquip": {
+      "ShipLimit": {
+        "type": "input",
+        "value": 0,
+        "validate": [
+          0,
+          9999
+        ]
+      }
+    },
+    "Storage": {
+      "Storage": {
+        "type": "storage",
+        "value": {},
+        "valuetype": "ignore",
+        "display": "disabled"
+      }
+    }
+  },
   "Benchmark": {
     "Benchmark": {
       "DeviceType": {
