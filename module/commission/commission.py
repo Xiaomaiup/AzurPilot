@@ -645,6 +645,7 @@ class RewardCommission(UI, InfoHandler):
                     """
                     if tracked:
                         msg = '\n'.join(tracked) 
+                        webui_msg = msg.replace('\n\n', '\n')
                         if gem_count >= 50:
                             title = f"AzurPilot <{instance}> 大成功！！！委托获得顶级奖励喵！"
                             webui_title = "大成功！！！委托获得顶级奖励喵！"
@@ -666,7 +667,7 @@ class RewardCommission(UI, InfoHandler):
                         notify_webui(
                             instance,
                             title=webui_title,
-                            content=msg,
+                            content=webui_msg,
                         )
             else:
                 logger.info('Commission income: no known items recognized from all screenshots')
