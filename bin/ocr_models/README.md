@@ -49,3 +49,17 @@ v3 zh-cn
 JP/TW 使用 `Add.223`。
 JP/TW 的 ONNX 图需要先修补动态 attention/slice 规则；当前直接使用修补后的
 raw ncnn 图，避免 `ncnnoptimize` 在该图上破坏输入 blob。
+
+## en-US Model
+
+v6 准确率较低-淘汰
+v6.1 模型遗忘-淘汰
+v6.2 7k数据集训练 准确率97-淘汰
+v6.3 10k数据集 准确率99
+v6.4 低学习率 准确率较低-淘汰
+
+## zh—CN Model
+
+v6 模型准确率相对老版本降低
+v6.1 模型准确率追赶老版本
+
