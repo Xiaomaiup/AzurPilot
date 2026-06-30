@@ -619,45 +619,49 @@ class RewardCommission(UI, InfoHandler):
                     if self.config.Commission_CommissionNotifyRewardStatistics:
                         reward_stats = cl1_db.get_commission_reward_stats(instance)
                     gem_count = merged_items.get("Gem", 0)
-                    """cube_count = merged_items.get("Cube", 0)"""
+                    cube_count = merged_items.get("Cube", 0)
                     tracked = []
                     if gem_count > 0:
                         text = f'💎钻石 * {gem_count}'
-
-                        if reward_stats is not None:
+                        if reward_stats:
                             text += (
                                 f'\n\n今日累计获取💎钻石 * {reward_stats["today"].get("Gem", 0)}'
                                 f'\n本周累计获取💎钻石 * {reward_stats["week"].get("Gem", 0)}'
                                 f'\n本月累计获取💎钻石 * {reward_stats["month"].get("Gem", 0)}'
                             )
+                        tracked.append(text)
 
-                        tracked.append(text)
-                    """
-                    if cube_count > 0:
-                        text = f'🧊魔方 * {cube_count}'
-                        if reward_stats is not None:
-                            text += (
-                            f'\n\n今日累计获取🧊魔方 * {reward_stats["today"].get("Cube", 0)}'
-                            f'\n本周累计获取🧊魔方 * {reward_stats["week"].get("Cube", 0)}'
-                            f'\n本月累计获取🧊魔方 * {reward_stats["month"].get("Cube", 0)}'
-                        )
-                        tracked.append(text)
-                    """
+                    # ===============================
+                    # if cube_count > 0:
+                    #     text = f'🧊魔方 * {cube_count}'
+                    #     if reward_stats:
+                    #         text += (
+                    #             f'\n\n今日累计获取🧊魔方 * {reward_stats["today"].get("Cube", 0)}'
+                    #             f'\n本周累计获取🧊魔方 * {reward_stats["week"].get("Cube", 0)}'
+                    #             f'\n本月累计获取🧊魔方 * {reward_stats["month"].get("Cube", 0)}'
+                    #         )
+                    #     tracked.append(text)
+                    # ===============================
+
                     if tracked:
-                        msg = '\n'.join(tracked) 
+
+                        msg = '\n'.join(tracked)
                         webui_msg = msg.replace('\n\n', '\n')
+                        title = f"AzurPilot <{instance}> 委托获得奖励喵！"
+                        webui_title = f"AzurPilot <{instance}> 委托获得奖励喵！"
                         if gem_count >= 50:
                             title = f"AzurPilot <{instance}> 大成功！！！委托获得顶级奖励喵！"
-                            webui_title = "大成功！！！委托获得顶级奖励喵！"
+                            webui_title = f"AzurPilot <{instance}> 大成功！！！委托获得顶级奖励喵！"
+
                         elif gem_count > 0:
                             title = f"AzurPilot <{instance}> 委托获得顶级奖励喵！"
-                            webui_title = "委托获得顶级奖励喵！"
-                        """
-                        # 以后恢复 Cube 时
-                        elif cube_count > 0:
-                            title = f"AzurPilot <{instance}> 委托获得高级奖励喵！"
-                            webui_title = "委托获得高级奖励喵！"
-                        """
+                            webui_title = f"AzurPilot <{instance}> 委托获得顶级奖励喵！"
+
+                        # ===============================
+                        #elif cube_count > 0:
+                        #    title = f"AzurPilot <{instance}> 委托获得高级奖励喵！"
+                        #    webui_title = f"AzurPilot <{instance}> 委托获得高级奖励喵！"
+                        # ===============================
                         handle_notify(
                             self.config.Error_OnePushConfig,
                             title=title,
@@ -669,6 +673,7 @@ class RewardCommission(UI, InfoHandler):
                             title=webui_title,
                             content=webui_msg,
                         )
+
             else:
                 logger.info('Commission income: no known items recognized from all screenshots')
 
