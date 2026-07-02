@@ -94,12 +94,12 @@ class ConnectionAttr:
         target.parent.mkdir(parents=True, exist_ok=True)
         if target.exists() or target.is_symlink():
             target.unlink()
-        try:
-            target.symlink_to(source)
-        except OSError:
-            shutil.copy2(source, target)
-            if os.name != 'nt':
-                target.chmod(target.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+        shutil.copy2(source, target)
+        if os.name == 'nt':
+            for dll in tools_dir.glob('*.dll'):
+                shutil.copy2(dll, target.parent / dll.name)
+        else:
+            target.chmod(target.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
         logger.info(f'ADB 已安装: {target}')
         return str(target).replace('\\\\', '/').replace('\\', '/')
