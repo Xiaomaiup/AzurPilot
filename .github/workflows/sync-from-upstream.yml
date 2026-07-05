@@ -1,0 +1,22 @@
+name: 'Sync Fork with Upstream'
+
+on:
+  schedule:
+    - cron: '0 7 * * 1,4'   # 每周一和周四早上7点
+  workflow_dispatch:        # 支持手动触发
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: Sync upstream changes
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+      with:
+        target_sync_branch: master     # 你的默认分支，可能是 master 或 main
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_sync_repo: wess09/AzurPilot   # ⚠️ 这里要改成真正的上游仓库
+        upstream_sync_branch: master   # 上游仓库的分支
