@@ -1,12 +1,22 @@
-steps:
-- uses: actions/checkout@v4          # v2 → v4
-  with:
-    persist-credentials: false
+name: 'Sync Fork with Upstream'
 
-- name: Sync upstream changes
-  uses: aormsby/Fork-Sync-With-Upstream-action@v3.7  # v3.4 → v3.7
-  with:
-    target_sync_branch: master
-    target_repo_token: ${{ secrets.GITHUB_TOKEN }}
-    upstream_sync_repo: wess09/AzurPilot
-    upstream_sync_branch: master
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 每天早上7点（UTC），北京时间下午3点
+  workflow_dispatch:      # 支持手动触发
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: Sync upstream changes
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.7
+      with:
+        target_sync_branch: master
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+        upstream_sync_repo: wess09/AzurPilot
+        upstream_sync_branch: master
