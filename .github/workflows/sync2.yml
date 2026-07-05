@@ -1,9 +1,13 @@
 name: sync2mirror
 on:
-  push:
+  schedule:
+    - cron: '30 7 * * *'   # 每天 7:30 UTC（北京时间 15:30）运行，确保 GitHub 已先完成同步
+  workflow_dispatch:       # 允许在 Actions 页面手动点击运行
+  push:                    # 可选：如果你想保留手动 push 触发，可以保留；不需要可以删除
     branches:
       - master
       - dev
+
 jobs:
   repo-sync:
     env:
@@ -12,7 +16,7 @@ jobs:
       gitcode_user: ${{ secrets.GITCODE_USER }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2     # 建议升级到 v4
         with:
           persist-credentials: false
           fetch-depth: 0
