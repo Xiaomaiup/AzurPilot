@@ -278,6 +278,10 @@
       "name": "スマートスケジューリング+",
       "help": "セイレーン作戦スマートスケジューリング機能。侵蝕1レベリングとゴールドコイン補充タスク間の切り替えを調整します。\n有効にすると、ゴールドコインと行動力に基づいて異なるタスク間を自動的に切り替え、プッシュ通知を送信します。"
     },
+    "OpsiPreventActionPointOverflow": {
+      "name": "行動力溢れ防止",
+      "help": "現在行動力が上限に達した時、セイレーン作戦任務を実行して行動力を消費します"
+    },
     "OpsiCrossMonth": {
       "name": "月跨ぎデイリー",
       "help": "    AzurPilotはセイレーン作戦の月跨ぎリセットの10分前にセイレーン作戦に入り、リセットを待ちますが退出しません。その後、新しい日のセイレーン作戦デイリー、隠秘海域、深淵海域と指揮ニャファームを完了して、追加の報酬を獲得します。セイレーン作戦デイリーを実行する場合は「セイレーン作戦-デイリー」タスク設定に従い、その他も同様です。\n    重要：AzurPilotが月跨ぎを待っている間は、ゲームを操作しないでください。"
@@ -3228,10 +3232,6 @@
       "name": "統計非侵食 1 ソース体力",
       "help": "オンにすると、すべてのソース（明石店での購入など）のスタミナ獲得データがカウントされます。オフにすると侵食1レベリングタスクのみ体力データがカウントされ、他のタスクや手動操作で得た体力は無視されます。"
     },
-    "PreserveVirtualAsset": {
-      "name": "X ポイントの仮想資産を保持",
-      "help": "仮想資産 = モビリティ × 1700/30 + 黄色のコイン + (月末までの時間/10分) × 1700/30\n仮想資産が X 未満の場合、黄色のコイン補給タスクが実行されます。0 は無制限を意味します。"
-    },
     "RecordSeaMiles": {
       "name": "海里数記録",
       "help": "侵食1レベリングサイクルごとに海里数を統計に記録します",
@@ -3339,16 +3339,6 @@
       "name": "ショートキャットは X ポイントの可動性を接続して保持します",
       "help": "モビリティがX以下になると停止し、モビリティボックスが自動的に開きます。"
     },
-    "ActionPointEarlyTriggerEnable": {
-      "name": "行動力の早期スケジュール",
-      "help": "侵食 1 または指揮ニャ周回の終了時に自然回復分の行動力を記録し、10 分ごとに 1 回復する速度でスマートスケジュールの次回実行時刻を計算して、行動力あふれを防ぎます。",
-      "True": "有効",
-      "False": "無効"
-    },
-    "ActionPointEarlyTriggerThreshold": {
-      "name": "早期スケジュール行動力しきい値",
-      "help": "自然回復分の行動力が X まで回復したらスマートスケジュールを再実行します。既定値は 200 で、自然上限付近で侵食 1 または指揮ニャ周回を選び直す用途に向いています。"
-    },
     "OperationCoinsReturnThreshold": {
       "name": "X 個の戦闘物資引換券を入手する",
       "help": "黄色のコイン獲得ミッション中に、戦闘補給券を合計 X 枚獲得 (増加) し、レベルを上げるために侵食 1 に戻ります。"
@@ -3377,20 +3367,30 @@
       "True": "有効",
       "False": "無効"
     },
-    "MeowStartEarlyMode": {
-      "name": "月末モビリティ自動掃除モード",
-      "help": "アグレッシブモード (×0.8): 前進が少なく、アクションパワーを節約しますが、リフレッシュを逃す可能性があります。バランスモード (×1.2): 通常前進、安全性と効率のバランス。保守モード（×1.5）：より前進、安全を優先しますが、行動力を無駄にする可能性があります",
-      "aggressive": "アグレッシブモード",
-      "balanced": "平衡モード",
-      "conservative": "保守的モード"
+    "TaskPriority": {
+      "name": "作戦コイン補充優先度",
+      "help": "作戦コイン（黄）が不足している場合、作戦コイン補充任務の実行優先順位。> で区切ります。"
+    }
+  },
+  "OpsiPreventActionPointOverflow": {
+    "_info": {
+      "name": "行動力溢れ防止",
+      "help": "現在行動力が上限に達した時、セイレーン作戦任務を実行して行動力を消費します\nスマートスケジューリングを選択した場合、行動力と作戦補給コインがどちらも不足して実行可能な任務がない時は、指揮ニャ周回を実行して現在行動力を消費します"
     },
-    "MeowStartEarlyEnable": {
-      "name": "月末にモビリティの自動クリーンアップを有効にする",
-      "help": "過去の AP 消費率に基づいて、月末に過剰なモビリティをクリーンアップするためにショート キャット タスクを事前に開始する必要があるかどうかを自動的に判断します。"
+    "Task": {
+      "name": "実行する任務",
+      "help": "専用処理があるスマートスケジューリングを推奨します",
+      "OpsiScheduling": "スマートスケジューリング（推奨）",
+      "OpsiHazard1Leveling": "侵蝕1レベリング",
+      "OpsiMeowfficerFarming": "指揮ニャ周回"
     },
-    "VirtualAssetPreserve": {
-      "name": "侵食1レベル X ポイント仮想資産を保持",
-      "help": "仮想資産 = モビリティ × 1700/30 + 黄色のコイン + (月末までの時間/10分) × 1700/30。仮想資産が X 未満の場合、黄色のコイン補給タスクが実行されます。"
+    "ActionPointUpperbound": {
+      "name": "現在行動力上限",
+      "help": "現在行動力がこの値に達した時、セイレーン作戦任務を開始します"
+    },
+    "ActionPointLowerbound": {
+      "name": "現在行動力下限",
+      "help": "現在行動力がこの値を下回るまで実行を続けます"
     }
   },
   "IslandPlan": {
@@ -6066,13 +6066,6 @@
       "AvgMeowRoundTime": "平均短猫ラウンド時間",
       "MeowLootTitle": "短猫収穫",
       "NoMeowDataNotice": "短猫収穫データがありません。1回実行後に自動生成されます",
-      "MeowAdvanceAdviceTitle": "短猫早め開始アドバイス",
-      "CurrentAP": "現在のAP: {value}",
-      "ApPerRound": "1ラウンド消費: {value} AP",
-      "AvailableRounds": "実行可能ラウンド数: {value}{unit}",
-      "AvgRoundDuration": "平均ラウンド時間: {value}{unit}",
-      "CurrentMode": "現在のモード: {value}",
-      "RecommendAhead": "推奨早め開始: {value}{unit}",
       "RoundUnit": " ラウンド",
       "SecondUnit": "秒",
       "HourUnit": "時間",
@@ -6095,9 +6088,6 @@
       "TargetExpRequired": "目標レベルに必要な経験値",
       "BattlesCompleted": "完了戦闘数",
       "ExpRemaining": "残り必要経験値",
-      "StartCleanupTime": "推奨クリーンアップ開始: {value}",
-      "NextOsReset": "次回大世界リセット: {value}",
-      "MeowAutoCleanupStatus": "自動先行クリーンアップ: {value}",
       "CommissionIncomeTitle": "委託収益統計",
       "CommissionIncomeMonth": "今月",
       "CommissionIncomeWeek": "今週",
@@ -6126,14 +6116,12 @@
       "UseSmartSchedulingOperationCoinsPreserve": "スマートスケジューリング作戦コイン保留",
       "OperationCoinsPreserve": "作戦コイン保留",
       "ActionPointPreserve": "行動力保留",
-      "ActionPointEarlyTriggerEnable": "行動力の早期スケジュール",
-      "ActionPointEarlyTriggerThreshold": "早期スケジュール行動力しきい値",
       "OperationCoinsReturnThreshold": "作戦コイン戻り閾値",
       "EnableMeowfficerFarming": "指揮ニャー収集を有効",
       "EnableObscure": "隠秘海域を有効",
       "EnableAbyssal": "深淵海域を有効",
       "EnableStronghold": "セイレーン要塞を有効",
-      "MeowStartEarlyMode": "短猫早期開始モード"
+      "TaskPriority": "任務優先度"
     },
     "Misc": {
       "Enabled": "有効",
