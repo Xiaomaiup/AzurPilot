@@ -46,6 +46,9 @@ class OSShop(PortShop, AkashiShop):
             SHOP_CLICK_SAFE_AREA
         ])
         set_amount_retry = 0
+        # 购买重试计数器，防止代币不足时无限重试点击商品和确认按钮
+        buy_retry = 0
+        buy_retry_limit = 3
 
         while True:
             if skip_first_screenshot:
@@ -83,6 +86,10 @@ class OSShop(PortShop, AkashiShop):
                 continue
 
             if not success and self.appear(PORT_SUPPLY_CHECK, offset=(20, 20), interval=5):
+                buy_retry += 1
+                if buy_retry > buy_retry_limit:
+                    logger.warning(f'Buy retry limit reached for {button.name}, likely not enough coins')
+                    break
                 amount_finish = False
                 self.device.click(button)
                 continue
@@ -252,6 +259,12 @@ class OSShop(PortShop, AkashiShop):
 
             if OCR_SHOP_AMOUNT.ocr(self.device.image) > 1:
                 break
+
+        # 读取游戏端实际允许的最大数量，防止计算的limit超过游戏端限制导致ui_ensure_index死循环
+        game_max = OCR_SHOP_AMOUNT.ocr(self.device.image)
+        if game_max > 0 and limit > game_max:
+            logger.info(f'Calculated limit {limit} exceeds game max {game_max}, using game max')
+            limit = game_max
 
         self.ui_ensure_index(limit, letter=OCR_SHOP_AMOUNT, prev_button=AMOUNT_MINUS, next_button=AMOUNT_PLUS,
                              skip_first_screenshot=True)
