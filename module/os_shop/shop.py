@@ -260,11 +260,13 @@ class OSShop(PortShop, AkashiShop):
             if OCR_SHOP_AMOUNT.ocr(self.device.image) > 1:
                 break
 
-        # 读取游戏端实际允许的最大数量，防止计算的limit超过游戏端限制导致ui_ensure_index死循环
-        game_max = OCR_SHOP_AMOUNT.ocr(self.device.image)
-        if game_max > 0 and limit > game_max:
-            logger.info(f'Calculated limit {limit} exceeds game max {game_max}, using game max')
-            limit = game_max
+        # 仅在已点击AMOUNT_MAX时，才能读取游戏端实际允许的最大数量
+        # set_to_max=False时未点击AMOUNT_MAX，界面数量仍为1，不能作为上限依据
+        if set_to_max:
+            game_max = OCR_SHOP_AMOUNT.ocr(self.device.image)
+            if game_max > 0 and limit > game_max:
+                logger.info(f'Calculated limit {limit} exceeds game max {game_max}, using game max')
+                limit = game_max
 
         self.ui_ensure_index(limit, letter=OCR_SHOP_AMOUNT, prev_button=AMOUNT_MINUS, next_button=AMOUNT_PLUS,
                              skip_first_screenshot=True)
