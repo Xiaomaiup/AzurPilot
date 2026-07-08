@@ -146,7 +146,7 @@ def _get_onnx_model_params(name):
     """
     if name == "azur_lane":
         return (
-            "bin/ocr_models/azur_lane/ap_azurlane-v6.5_small_rec_nvidia.onnx",
+            "bin/ocr_models/azur_lane/ap_azurlane-v6.6_small_rec_dcu.onnx",
             "bin/ocr_models/azur_lane/ppocrv6_azurlane_dict.txt",
             OCRVersion.PPOCRV6,
         )
