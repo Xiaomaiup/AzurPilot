@@ -193,7 +193,7 @@ class Dock(Equipment):
         setting.add_setting(
             setting='sort',
             option_buttons=ButtonGrid(
-                origin=(218, 31), delta=delta, button_shape=button_shape, grid_shape=(7, 1), name='FILTER_SORT'),
+                origin=(218, 37), delta=delta, button_shape=button_shape, grid_shape=(7, 1), name='FILTER_SORT'),
             # stat 选项有多余的网格，不值得处理
             option_names=['rarity', 'level', 'total', 'join', 'intimacy', 'mood', 'stat'],
             option_default='level'
