@@ -3,6 +3,7 @@ import yaml
 from module.base.timer import Timer
 from module.device.method.utils import HierarchyButton
 from module.equipment.assets import *
+from module.exception import EmulatorNotRunningError, RequestHumanTakeover
 from module.logger import logger
 from module.retire.assets import TEMPLATE_BOGUE, TEMPLATE_HERMES, TEMPLATE_RANGER, TEMPLATE_LANGLEY
 from module.storage.assets import EQUIPMENT_FULL
@@ -250,16 +251,97 @@ class EquipmentCodeHandler(StorageHandler):
         else:
             return False
 
+    @staticmethod
+    def _code_from_clipboard_output(output):
+        if output is None:
+            return None
+        if isinstance(output, bytes):
+            output = output.decode('utf-8', errors='ignore')
+
+        for line in reversed(str(output).splitlines()):
+            line = line.strip().strip('\'"')
+            if not line:
+                continue
+
+            lowered = line.lower()
+            if any(text in lowered for text in [
+                'not found',
+                'unknown command',
+                'no primary clip',
+                'exception',
+                'error:',
+                'security exception',
+            ]):
+                continue
+
+            for prefix in ['text:', 'clipboard text:']:
+                if lowered.startswith(prefix):
+                    line = line[len(prefix):].strip().strip('\'"')
+                    break
+
+            if line.startswith('ClipData') and ':' in line:
+                line = line.rsplit(':', 1)[1].strip().strip('\'"')
+
+            # 装备码是无空白的短文本；过滤掉 shell 命令说明等非剪贴板内容。
+            if len(line) >= len(EMPTY_CODE) and not any(char.isspace() for char in line):
+                return line
+
+        return None
+
+    def _clipboard_adb(self):
+        for command in [
+            ['cmd', 'clipboard', 'get'],
+            ['cmd', 'clipboard', 'get-primary-clip'],
+        ]:
+            try:
+                output = self.device.adb_shell(command, timeout=3)
+            except (EmulatorNotRunningError, RequestHumanTakeover):
+                raise
+            except Exception as e:
+                logger.debug(f"通过 ADB 读取剪贴板失败: {e}")
+                continue
+
+            code = self._code_from_clipboard_output(output)
+            if code is not None:
+                logger.info("通过 ADB 读取装备码剪贴板成功")
+                return code
+
+        return None
+
+    def _clipboard_uiautomator2(self):
+        try:
+            output = self.device.clipboard
+        except (EmulatorNotRunningError, RequestHumanTakeover):
+            raise
+        except Exception as e:
+            logger.warning(f"通过 uiautomator2 读取剪贴板失败: {e}")
+            return None
+
+        code = self._code_from_clipboard_output(output)
+        if code is not None:
+            logger.info("通过 uiautomator2 读取装备码剪贴板成功")
+        return code
+
+    def _clipboard_get(self):
+        code = self._clipboard_adb()
+        if code is not None:
+            return code
+
+        code = self._clipboard_uiautomator2()
+        if code is not None:
+            return code
+
+        logger.warning("读取装备码剪贴板失败")
+        return None
+
     def _code_export(self):
         self.handle_info_bar()
-        d = self.device.u2
         for _ in self.loop(timeout=10):
             if self.info_bar_count():
                 break
             if self.appear_then_click(EQUIPMENT_CODE_EXPORT, offset=(5, 5), interval=3):
                 continue
-        code = d.clipboard
-        return code
+        return self._clipboard_get()
 
     def code_clear(self, name=None):
         if not self.equipment_code_supported():
@@ -270,6 +352,9 @@ class EquipmentCodeHandler(StorageHandler):
             name = self.current_ship()
         if self.equipment_code_export_to_config and self.get_code(name=name) is None:
             self.last_code = self._code_export()
+            if self.last_code is None:
+                logger.warning("装备码导出失败，跳过清空装备")
+                return False
             self.set_code(name=name, code=self.last_code)
         return self._code_apply(code=None)
 
@@ -283,4 +368,7 @@ class EquipmentCodeHandler(StorageHandler):
         code = self.get_code(name=name)
         if code is None:
             code = self.last_code
+        if code is None:
+            logger.warning("没有可用装备码，跳过装备应用")
+            return False
         return self._code_apply(code=code)

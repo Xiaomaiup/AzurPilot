@@ -158,12 +158,21 @@ class GemsEquipmentHandler(EquipmentCodeHandler):
         return 'DD'
 
     def clear_all_equip(self):
-        return self.code_clear()
+        success = self.code_clear()
+        if not success:
+            logger.warning('[战役-紧急委托] 装备码导出失败，停止换船以避免装备状态丢失。')
+            raise RequestHumanTakeover
+        return success
 
     def apply_equip_code(self, code=None):
         if code is None:
-            return self.code_apply()
-        return self._code_apply(code=code)
+            success = self.code_apply()
+        else:
+            success = self._code_apply(code=code)
+        if not success:
+            logger.warning('[战役-紧急委托] 装备码应用失败，请人工检查当前舰队装备。')
+            raise RequestHumanTakeover
+        return success
 
 
 class GemsFarming(CampaignRun, FleetEquipment, GemsEquipmentHandler, Retirement):
