@@ -159,7 +159,12 @@ class EquipmentCodeHandler(StorageHandler):
 
     def fastinput_ime_enable(self):
         self.device.adb_shell(['am', 'start', '-a', 'android.settings.INPUT_METHOD_SETTINGS'])
+        timeout = Timer(10).start()
         while 1:
+            if timeout.reached():
+                logger.warning("Enable FastInputIME timeout")
+                break
+
             h = self.device.dump_hierarchy_adb()
 
             def appear(xpath):
@@ -308,7 +313,7 @@ class EquipmentCodeHandler(StorageHandler):
                 continue
 
             lowered = line.lower()
-            if any(text in lowered for text in [
+            if any(keyword in lowered for keyword in [
                 'not found',
                 'unknown command',
                 'no shell command implementation',

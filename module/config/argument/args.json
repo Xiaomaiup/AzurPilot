@@ -2303,11 +2303,11 @@
         "type": "checkbox",
         "value": false
       },
-      "ALLowHighFlagshipLevel": {
+      "AllowHighFlagshipLevel": {
         "type": "checkbox",
         "value": false
       },
-      "ALLowLowVanguardLevel": {
+      "AllowLowVanguardLevel": {
         "type": "checkbox",
         "value": false
       },
@@ -2810,11 +2810,11 @@
         "type": "checkbox",
         "value": false
       },
-      "ALLowHighFlagshipLevel": {
+      "AllowHighFlagshipLevel": {
         "type": "checkbox",
         "value": false
       },
-      "ALLowLowVanguardLevel": {
+      "AllowLowVanguardLevel": {
         "type": "checkbox",
         "value": false
       },
@@ -3317,11 +3317,11 @@
         "type": "checkbox",
         "value": false
       },
-      "ALLowHighFlagshipLevel": {
+      "AllowHighFlagshipLevel": {
         "type": "checkbox",
         "value": false
       },
-      "ALLowLowVanguardLevel": {
+      "AllowLowVanguardLevel": {
         "type": "checkbox",
         "value": false
       },

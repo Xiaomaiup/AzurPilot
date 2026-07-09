@@ -354,7 +354,7 @@ class FleetPreparation(InfoHandler):
                 submarine.raise_hard_not_satisfied()
 
         # Skip fleet preparation in hard mode
-        self.map_is_hard_mode = h1 or h2 or h3
+        self.map_is_hard_mode = h1 is not None or h2 is not None or h3 is not None
         if self.map_is_hard_mode:
             logger.info('Hard Campaign. No fleet preparation')
             # Clear submarine if user did not set a submarine fleet
