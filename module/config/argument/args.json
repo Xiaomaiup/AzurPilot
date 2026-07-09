@@ -2336,6 +2336,17 @@
         ]
       }
     },
+    "EquipmentCode": {
+      "ExportToConfig": {
+        "type": "checkbox",
+        "value": true
+      },
+      "Config": {
+        "type": "textarea",
+        "value": "DD: null\nbogue: null\nhermes: null\nlangley: null\nranger: null",
+        "mode": "yaml"
+      }
+    },
     "Campaign": {
       "Name": {
         "type": "input",
@@ -2644,13 +2655,14 @@
       },
       "Fleet2Value": {
         "type": "input",
-        "value": 119
+        "value": 119,
+        "display": "hide"
       },
       "Fleet2Record": {
         "type": "datetime",
         "value": "2020-01-01 00:00:00",
         "validate": "datetime",
-        "display": "disabled"
+        "display": "hide"
       },
       "Fleet2Control": {
         "type": "select",

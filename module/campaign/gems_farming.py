@@ -16,7 +16,7 @@ from module.equipment.assets import (
 )
 from module.equipment.equipment_code import EquipmentCodeHandler
 from module.equipment.fleet_equipment import FleetEquipment, OCR_FLEET_INDEX
-from module.exception import CampaignEnd, ScriptError, RequestHumanTakeover
+from module.exception import CampaignEnd, HardNotSatisfied, ScriptError, RequestHumanTakeover
 from module.retire.retirement import Retirement, TEMPLATE_COMMON_CV, TEMPLATE_COMMON_DD
 from module.retire.assets import DOCK_CHECK, DOCK_SHIP_DOWN, TEMPLATE_BOGUE, TEMPLATE_HERMES, TEMPLATE_LANGLEY, TEMPLATE_RANGER, TEMPLATE_CASSIN_1, TEMPLATE_CASSIN_2, TEMPLATE_DOWNES_1, TEMPLATE_DOWNES_2, TEMPLATE_AULICK, TEMPLATE_FOOTE
 from module.handler.assets import AUTO_SEARCH_MAP_OPTION_OFF
@@ -122,12 +122,12 @@ class GemsEquipmentHandler(EquipmentCodeHandler):
 
 
     def __init__(self, config, device=None, task=None):
-        command = config.task.command if config and hasattr(config, 'task') and config.task else 'GemsFarming'
-        super().__init__(config=config,
-                         device=device,
-                         task=task,
-                         key=f"{command}.GemsFarming.EquipmentCode",
-                         ships=['DD', 'bogue', 'hermes', 'langley', 'ranger'])
+        super().__init__(config=config, device=device, task=task)
+
+    @property
+    def equipment_code_config_key(self):
+        command = self.config.task.command if hasattr(self.config, 'task') and self.config.task else 'GemsFarming'
+        return f"{command}.GemsFarming.EquipmentCode"
 
     def current_ship(self, skip_first_screenshot=True):
         """
@@ -156,6 +156,14 @@ class GemsEquipmentHandler(EquipmentCodeHandler):
         if TEMPLATE_LANGLEY.match(self.device.image, scaling=25 / 21):
             return 'langley'
         return 'DD'
+
+    def clear_all_equip(self):
+        return self.code_clear()
+
+    def apply_equip_code(self, code=None):
+        if code is None:
+            return self.code_apply()
+        return self._code_apply(code=code)
 
 
 class GemsFarming(CampaignRun, FleetEquipment, GemsEquipmentHandler, Retirement):
@@ -850,7 +858,7 @@ class GemsFarming(CampaignRun, FleetEquipment, GemsEquipmentHandler, Retirement)
             mode (str): `normal` 或 `hard`。
             total (int): 总运行次数限制。
         """
-        self.config.STOP_IF_REACH_LV32 = self.change_flagship
+        self.config.STOP_IF_REACH_LV32 = self.change_flagship and not self.config.GemsFarming_ALLowHighFlagshipLevel
         # 初始检查旗舰等级。
         # 如果启用了旗舰更换，在开始时强制更换旗舰。
         # 解决脚本以 32 级旗舰启动但未退役的问题。
@@ -874,17 +882,30 @@ class GemsFarming(CampaignRun, FleetEquipment, GemsEquipmentHandler, Retirement)
                     self.set_emotion(0)
                 else:
                     raise e
-            except RequestHumanTakeover as e:
+            except HardNotSatisfied:
                 try:
-                    if e.args[0] == 'Hard not satisfied' and self.change_flagship and self.change_vanguard:
+                    if self.change_flagship and self.change_vanguard:
                         self.hard_mode_override()
                         self.vanguard_change()
                         self.flagship_change()
                     else:
                         raise RequestHumanTakeover
-                except RequestHumanTakeover as e:
+                except RequestHumanTakeover:
                     raise RequestHumanTakeover
-                except Exception as e:
+                except Exception:
+                    from module.exception import GameStuckError
+                    raise GameStuckError
+            except RequestHumanTakeover as e:
+                try:
+                    if e.args and e.args[0] == 'Hard not satisfied' and self.change_flagship and self.change_vanguard:
+                        self.hard_mode_override()
+                        self.vanguard_change()
+                        self.flagship_change()
+                    else:
+                        raise RequestHumanTakeover
+                except RequestHumanTakeover:
+                    raise RequestHumanTakeover
+                except Exception:
                     from module.exception import GameStuckError
                     raise GameStuckError
 

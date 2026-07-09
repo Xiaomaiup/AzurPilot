@@ -54,6 +54,7 @@ Farm:
     GemsFarming:
       - Scheduler
       - GemsFarming
+      - EquipmentCode
       - Campaign
       - StopCondition
       - Fleet

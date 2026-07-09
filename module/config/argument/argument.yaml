@@ -541,6 +541,12 @@ GemsFarming:
   VanguardLevelMax:
     value: 125
     validate: [1, 125]
+EquipmentCode:
+  ExportToConfig: true
+  Config:
+    type: textarea
+    mode: yaml
+    value: |-
 
 # ==================== Event ====================
 
