@@ -1896,12 +1896,12 @@
       "help": "1200油委託現在已經過時，收益很低，建議關閉"
     },
     "CommissionNotifyReward": {
-      "name": "Commission.CommissionNotifyReward.name",
-      "help": "Commission.CommissionNotifyReward.help"
+      "name": "委託獎勵推送通知",
+      "help": "獲得委託獎勵時推送通知（特別關注鑽石獎勵）"
     },
     "CommissionNotifyRewardStatistics": {
-      "name": "Commission.CommissionNotifyRewardStatistics.name",
-      "help": "Commission.CommissionNotifyRewardStatistics.help"
+      "name": "推送包含統計資訊",
+      "help": "在通知中顯示今日/本週/本月累計鑽石數量"
     }
   },
   "Tactical": {
