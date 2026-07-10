@@ -1896,12 +1896,12 @@
       "help": "1200油委托现在已经过时，收益很低，建议关闭"
     },
     "CommissionNotifyReward": {
-      "name": "Commission.CommissionNotifyReward.name",
-      "help": "Commission.CommissionNotifyReward.help"
+      "name": "委托奖励推送通知",
+      "help": "获得委托奖励时推送通知（特别关注钻石奖励）"
     },
     "CommissionNotifyRewardStatistics": {
-      "name": "Commission.CommissionNotifyRewardStatistics.name",
-      "help": "Commission.CommissionNotifyRewardStatistics.help"
+      "name": "推送包含统计信息",
+      "help": "在通知中显示今日/本周/本月累计钻石数量"
     }
   },
   "Tactical": {
