@@ -2,20 +2,8 @@ import os
 import random
 import re
 import socket
-import sys
 import time
 import typing as t
-
-# Python 3.14 removed the stdlib distutils module, while the pinned
-# adbutils/packaging stack still imports distutils.util.
-try:
-    import distutils.util  # noqa: F401
-except ModuleNotFoundError:
-    import setuptools._distutils as _distutils
-    import setuptools._distutils.util as _distutils_util
-
-    sys.modules.setdefault('distutils', _distutils)
-    sys.modules.setdefault('distutils.util', _distutils_util)
 
 import uiautomator2 as u2
 import uiautomator2cache
