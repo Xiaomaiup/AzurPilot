@@ -2,20 +2,6 @@ from module.logger import logger  # Change folder automatically
 from dev_tools.utils import LuaLoader
 
 
-def normalize_text(text):
-    if isinstance(text, str):
-        return text.replace('\xa0', ' ')
-    return text
-
-
-def normalize_data(data):
-    if isinstance(data, dict):
-        return {normalize_data(key): normalize_data(value) for key, value in data.items()}
-    if isinstance(data, list):
-        return [normalize_data(item) for item in data]
-    return normalize_text(data)
-
-
 class Item:
     def __init__(self, data):
         """
@@ -43,7 +29,7 @@ class Project:
         Args:
             data (dict):
         """
-        self.name = normalize_text(data['name'])
+        self.name = data['name']
         self.series = int(data['blueprint_version'])
         self.time = int(data['time'])
         self.input = [Item(item) for item in data['consume'].values()]
@@ -59,7 +45,7 @@ class Project:
             'input': [{'name': item.name, 'amount': item.amount} for item in self.input],
             'output': [{'name': item.name} for item in self.output],
         }
-        return str(normalize_data(data))
+        return str(data)
 
 
 # Key: chinese, value: english
@@ -69,12 +55,15 @@ DIC_TRANSLATION = {
     '蓝图：埃吉尔': 'Blueprint - Ägir',
     '蓝图：奥古斯特·冯·帕塞瓦尔': 'Blueprint - August von Parseval',
     '蓝图：马可波罗': 'Blueprint - Marco Polo',
+    '蓝图：瓦尔帕莱索': 'Blueprint - Valparaíso',
+    '蓝图：{namecode:565}': 'Blueprint - Max Immelmann',
+    '蓝图：邓肯': 'Blueprint - Duncan',
+    '蓝图：{namecode:313}': 'Blueprint - Takahashi',
+    '蓝图：暴风雨': 'Blueprint - Orage',
 }
 
 
 def set_translation(cn, en):
-    cn = normalize_text(cn)
-    en = normalize_text(en)
     if len(cn) and len(en):
         if cn not in DIC_TRANSLATION:
             DIC_TRANSLATION[cn] = en
@@ -98,10 +87,10 @@ class TechnologyTemplate:
         for project in self.projects.values():
             project.task.name = DIC_TRANSLATION.get(project.task.name, project.task.name)
             for item in project.input:
-                # Change Ägir to Agir
-                item.name = DIC_TRANSLATION.get(item.name, item.name).replace('Ä', 'A')
+                # Change Ägir to Agir, Valparaíso to Valparaiso
+                item.name = DIC_TRANSLATION.get(item.name, item.name).replace('Ä', 'A').replace('í', 'i')
             for item in project.output:
-                item.name = DIC_TRANSLATION.get(item.name, item.name).replace('Ä', 'A')
+                item.name = DIC_TRANSLATION.get(item.name, item.name).replace('Ä', 'A').replace('í', 'i')
 
     def load_projects(self, loader):
         tech = loader.load('sharecfg/technology_data_template.lua')
@@ -116,11 +105,11 @@ class TechnologyTemplate:
                 continue
             project = Project(value)
             if project.task.id:
-                project.task.name = normalize_text(task[project.task.id]['desc'].replace('\\n', ''))
+                project.task.name = task[project.task.id]['desc'].replace('\\n', '')
             for i in project.input:
-                i.name = normalize_text(item[i.id]['name'].strip())
+                i.name = item[i.id]['name'].strip()
             for i in project.output:
-                i.name = normalize_text(item[i.id]['name'].strip())
+                i.name = item[i.id]['name'].strip()
 
             key = (project.series, project.name)
             if key not in projects:
@@ -155,7 +144,7 @@ Arguments:
     FILE:  Path to AzurLaneData, '<your_folder>/AzurLaneData'
     SAVE:  File to save, 'module/research/project_data.py'
 """
-FOLDER = r'..\AzurLaneLuaScripts'
+FOLDER = '../AzurLaneLuaScripts'
 SAVE = 'module/research/project_data.py'
 
 TechnologyTemplate().write(SAVE)

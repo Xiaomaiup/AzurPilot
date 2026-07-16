@@ -523,6 +523,7 @@
       "cn_android-26": "[国服] 冬月计划",
       "cn_android-27": "[国服] 长弓计划",
       "cn_android-28": "[国服] 裁决协议",
+      "cn_android-29": "[国服] 帷幕计划",
       "cn_ios-0": "[国服] 夏威夷",
       "cn_ios-1": "[国服] 珊瑚海",
       "cn_ios-2": "[国服] 中途岛",
@@ -1375,6 +1376,10 @@
       "fleet1_boss_fleet2_mob": "Fleet 1 Boss, Fleet 2 Mob",
       "fleet1_all_fleet2_standby": "Fleet 1 Clears All, Fleet 2 Standby",
       "fleet1_standby_fleet2_all": "Fleet 1 Standby, Fleet 2 Clears All"
+    },
+    "SkipPreparation": {
+      "name": "Skip Fleet Preparation",
+      "help": "Skip the fleet selection step in the fleet preparation screen and use the game's current pre-selected fleet.\nUseful for accounts that have not unlocked all fleet slots, avoiding dropdown menu detection freeze.\nMake sure you have manually selected Fleet 1 and Fleet 2 in-game before enabling."
     }
   },
   "Submarine": {
@@ -1896,12 +1901,12 @@
       "help": "The 1200 oil commission is now obsolete and the yield is very low. It is recommended to close it."
     },
     "CommissionNotifyReward": {
-      "name": "Commission.CommissionNotifyReward.name",
-      "help": "Commission.CommissionNotifyReward.help"
+      "name": "Commission Reward Push Notification",
+      "help": "Push notification when receiving commission rewards (especially for gems)"
     },
     "CommissionNotifyRewardStatistics": {
-      "name": "Commission.CommissionNotifyRewardStatistics.name",
-      "help": "Commission.CommissionNotifyRewardStatistics.help"
+      "name": "Include Statistics in Push",
+      "help": "Display today/week/month cumulative gem count in notification"
     }
   },
   "Tactical": {
@@ -2009,6 +2014,14 @@
     "AllowDelay": {
       "name": "Delay research when resources are insufficient",
       "help": "When resources are insufficient, AzurPilot will delay research until conditions are met or the research queue is about to be cleared, which will not cause research to stop.\nIf resources remain insufficient for a long time or AzurPilot is not running long enough, you can disable this option to keep the research queue full."
+    },
+    "AllowGenreT": {
+      "name": "Allow T-series research",
+      "help": "T-series research may leave the research queue idle and reduce efficiency. Enable it only when needed."
+    },
+    "RemainingCommissions": {
+      "name": "Remaining T-series commissions",
+      "help": "Number of commissions still required by the pending T-series research. -1 means no T-series research is pending."
     },
     "PresetFilter": {
       "name": "Research filter",

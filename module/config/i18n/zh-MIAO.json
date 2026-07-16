@@ -523,6 +523,7 @@
       "cn_android-26": "[国服] 冬月计划",
       "cn_android-27": "[国服] 长弓计划",
       "cn_android-28": "[国服] 裁决协议",
+      "cn_android-29": "[国服] 帷幕计划",
       "cn_ios-0": "[国服] 夏威夷",
       "cn_ios-1": "[国服] 珊瑚海",
       "cn_ios-2": "[国服] 中途岛",
@@ -1375,6 +1376,10 @@
       "fleet1_boss_fleet2_mob": "一队boss 二队道中喵",
       "fleet1_all_fleet2_standby": "一队全清 二队待机喵",
       "fleet1_standby_fleet2_all": "一队待机 二队全清喵"
+    },
+    "SkipPreparation": {
+      "name": "Fleet.SkipPreparation.name",
+      "help": "Fleet.SkipPreparation.help"
     }
   },
   "Submarine": {
@@ -1896,12 +1901,12 @@
       "help": "1200油委现已过时收益低，建议关闭喵。 (´・ω・`)"
     },
     "CommissionNotifyReward": {
-      "name": "Commission.CommissionNotifyReward.name",
-      "help": "Commission.CommissionNotifyReward.help"
+      "name": "委托奖励推送通知喵~",
+      "help": "获得委托奖励时推送通知喵（特别关注钻石奖励）！"
     },
     "CommissionNotifyRewardStatistics": {
-      "name": "Commission.CommissionNotifyRewardStatistics.name",
-      "help": "Commission.CommissionNotifyRewardStatistics.help"
+      "name": "推送含统计信息喵~",
+      "help": "通知里会显示今日/本周/本月累计钻石数量喵！"
     }
   },
   "Tactical": {
@@ -2009,6 +2014,14 @@
     "AllowDelay": {
       "name": "资源不足时延迟科研",
       "help": "资源不足延迟到满足条件或科研队即将清空，不会停转。长期缺资源或运行时间不够可取消，保持队列满。 (´・ω・`)"
+    },
+    "AllowGenreT": {
+      "name": "允许做T类科研喵",
+      "help": "此功能可能导致科研空转和效率降低，确认确实需要后再开启喵"
+    },
+    "RemainingCommissions": {
+      "name": "T类科研剩余委托数",
+      "help": "T类科研还需完成多少次委托，-1代表没有挂起的T类科研喵"
     },
     "PresetFilter": {
       "name": "科研过滤器",

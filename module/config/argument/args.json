@@ -282,6 +282,7 @@
           "cn_android-26",
           "cn_android-27",
           "cn_android-28",
+          "cn_android-29",
           "cn_ios-0",
           "cn_ios-1",
           "cn_ios-2",
@@ -1163,6 +1164,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -1584,6 +1589,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -2005,6 +2014,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -2345,7 +2358,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -2358,10 +2370,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -2549,6 +2560,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -2852,7 +2867,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "display": "hide",
@@ -2866,10 +2880,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -3057,6 +3070,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -3550,6 +3567,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -3789,7 +3810,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -3802,10 +3822,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -3986,6 +4005,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -4228,7 +4251,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -4241,10 +4263,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -4425,6 +4446,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -4667,7 +4692,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -4680,10 +4704,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -4863,6 +4886,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -5612,6 +5639,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -6957,6 +6988,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -7210,7 +7245,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -7223,10 +7257,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -7413,6 +7446,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -7666,7 +7703,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -7679,10 +7715,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -7869,6 +7904,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -8122,7 +8161,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -8135,10 +8173,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -8325,6 +8362,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -8578,7 +8619,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -8591,10 +8631,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -8781,6 +8820,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -9024,7 +9067,6 @@
         "type": "select",
         "value": "campaign_main",
         "option": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ],
         "option_cn": [
@@ -9037,10 +9079,9 @@
           "event_20260625_cn"
         ],
         "option_tw": [
-          "event_20230223_cn"
+          "event_20260625_cn"
         ],
         "option_bold": [
-          "event_20230223_cn",
           "event_20260625_cn"
         ]
       },
@@ -9227,6 +9268,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -10287,6 +10332,14 @@
       "AllowDelay": {
         "type": "checkbox",
         "value": true
+      },
+      "AllowGenreT": {
+        "type": "checkbox",
+        "value": false
+      },
+      "RemainingCommissions": {
+        "type": "input",
+        "value": -1
       },
       "PresetFilter": {
         "type": "select",

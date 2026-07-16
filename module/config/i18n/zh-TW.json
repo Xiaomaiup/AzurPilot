@@ -523,6 +523,7 @@
       "cn_android-26": "[国服] 冬月计划",
       "cn_android-27": "[国服] 长弓计划",
       "cn_android-28": "[国服] 裁决协议",
+      "cn_android-29": "[国服] 帷幕计划",
       "cn_ios-0": "[国服] 夏威夷",
       "cn_ios-1": "[国服] 珊瑚海",
       "cn_ios-2": "[国服] 中途岛",
@@ -1133,7 +1134,7 @@
       "event_20260326_cn": "漫遊者招募計劃",
       "event_20260417_cn": "假日航線閃耀海濱",
       "event_20260520_cn": "聖印前的同盟",
-      "event_20260625_cn": "Miracle by Midnight",
+      "event_20260625_cn": "美夢巡演奇秒夜",
       "raid_20200624": "特別演習埃塞克斯級(復刻)",
       "raid_20210708": "復刻穿越彼方的水線",
       "raid_20220127": "演習神秘事件調查",
@@ -1375,6 +1376,10 @@
       "fleet1_boss_fleet2_mob": "一隊boss二隊道中",
       "fleet1_all_fleet2_standby": "一隊全清二隊待機",
       "fleet1_standby_fleet2_all": "一隊待機二隊全清"
+    },
+    "SkipPreparation": {
+      "name": "Fleet.SkipPreparation.name",
+      "help": "Fleet.SkipPreparation.help"
     }
   },
   "Submarine": {
@@ -1896,12 +1901,12 @@
       "help": "1200油委託現在已經過時，收益很低，建議關閉"
     },
     "CommissionNotifyReward": {
-      "name": "Commission.CommissionNotifyReward.name",
-      "help": "Commission.CommissionNotifyReward.help"
+      "name": "委託獎勵推送通知",
+      "help": "獲得委託獎勵時推送通知（特別關注鑽石獎勵）"
     },
     "CommissionNotifyRewardStatistics": {
-      "name": "Commission.CommissionNotifyRewardStatistics.name",
-      "help": "Commission.CommissionNotifyRewardStatistics.help"
+      "name": "推送包含統計資訊",
+      "help": "在通知中顯示今日/本週/本月累計鑽石數量"
     }
   },
   "Tactical": {
@@ -2009,6 +2014,14 @@
     "AllowDelay": {
       "name": "資源不足時延遲科研",
       "help": "資源不足時AzurPilot會延遲科研直到滿足條件或科研佇列即將清空，不會導致科研停轉\n如果長期保持資源不足或執行AzurPilot的時間不夠長，可以取消本選項以保持科研佇列裝滿"
+    },
+    "AllowGenreT": {
+      "name": "允許進行T類科研",
+      "help": "此功能可能導致科研佇列閒置及效率降低，請僅在確實需要時啟用。"
+    },
+    "RemainingCommissions": {
+      "name": "T類科研剩餘委託次數",
+      "help": "待處理T類科研仍需完成的委託次數，-1代表沒有待處理的T類科研。"
     },
     "PresetFilter": {
       "name": "科研過濾器",
