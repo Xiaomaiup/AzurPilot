@@ -1164,6 +1164,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -1585,6 +1589,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -2006,6 +2014,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -2548,6 +2560,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -3054,6 +3070,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -3547,6 +3567,10 @@
           "fleet1_standby_fleet2_all"
         ],
         "display": "display"
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -3981,6 +4005,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -4418,6 +4446,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -4854,6 +4886,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -5603,6 +5639,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -6948,6 +6988,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -7402,6 +7446,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -7856,6 +7904,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -8310,6 +8362,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -8764,6 +8820,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
@@ -9208,6 +9268,10 @@
           "fleet1_all_fleet2_standby",
           "fleet1_standby_fleet2_all"
         ]
+      },
+      "SkipPreparation": {
+        "type": "checkbox",
+        "value": false
       }
     },
     "Submarine": {
