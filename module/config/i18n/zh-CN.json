@@ -1991,10 +1991,6 @@
       "only_no_project": "无项目可做时",
       "do_not_use": "不使用"
     },
-    "CubePreserve": {
-      "name": "保留 X 个魔方",
-      "help": "当当前魔方数量小于等于该值时，科研暂时不选择消耗魔方的项目。\n0 表示关闭。"
-    },
     "UseCoin": {
       "name": "使用物资",
       "help": "",

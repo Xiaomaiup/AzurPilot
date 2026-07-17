@@ -1921,7 +1921,6 @@
     },
     "Research": {
       "UseCube": "only_05_hour",
-      "CubePreserve": 0,
       "UseCoin": "always_use",
       "UsePart": "always_use",
       "AllowDelay": true,
