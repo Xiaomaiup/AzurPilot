@@ -10301,14 +10301,6 @@
           "do_not_use"
         ]
       },
-      "CubePreserve": {
-        "type": "input",
-        "value": 0,
-        "validate": [
-          0,
-          999999
-        ]
-      },
       "UseCoin": {
         "type": "select",
         "value": "always_use",

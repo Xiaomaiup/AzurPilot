@@ -1991,10 +1991,6 @@
       "only_no_project": "When no project available",
       "do_not_use": "Do not use"
     },
-    "CubePreserve": {
-      "name": "Preserve X Cubes",
-      "help": "When current cubes are less than or equal to this value, Research will temporarily skip projects that consume cubes.\n0 disables this protection."
-    },
     "UseCoin": {
       "name": "Use Coins",
       "help": "",
