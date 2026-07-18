@@ -3897,35 +3897,6 @@ class AlasGUI(Frame):
               </div>
               <div id="{status_id}" class="startup-run-status">{t("Gui.StartupRun.Loading")}</div>
             </div>
-            <style>
-              .startup-run-panel {{
-                margin: 0 0 14px;
-                padding: 14px 16px;
-                border: 1px solid rgba(128, 128, 128, .22);
-                border-radius: 8px;
-                background: var(--alas-content-bg, rgba(255,255,255,.72));
-              }}
-              .startup-run-row {{
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: 16px;
-                align-items: center;
-              }}
-              .startup-run-title {{
-                font-size: 1rem;
-                font-weight: 700;
-                margin-bottom: 4px;
-              }}
-              .startup-run-desc,
-              .startup-run-status {{
-                color: var(--alas-muted-text, rgba(96, 96, 96, .9));
-                line-height: 1.55;
-              }}
-              .startup-run-status {{
-                margin-top: 10px;
-                font-size: .92rem;
-              }}
-            </style>
             """
         )
         run_js(

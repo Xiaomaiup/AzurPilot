@@ -114,6 +114,55 @@
     border-bottom: 1px solid var(--alas-entry-divider);
 }
 
+#pywebio-scope-groups > .startup-run-panel,
+#pywebio-scope-groups > *:has(> .startup-run-panel) {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    padding: 1rem;
+    color: var(--alas-entry-text);
+    background: var(--alas-entry-surface);
+    border: 1px solid var(--alas-entry-border);
+    border-radius: 16px;
+    box-shadow: var(--alas-entry-panel-shadow);
+}
+
+.startup-run-panel {
+    color: var(--alas-entry-text);
+}
+
+#pywebio-scope-groups > *:has(> .startup-run-panel) > .startup-run-panel {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.startup-run-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+}
+
+.startup-run-title {
+    margin: 0 0 4px;
+    color: var(--alas-entry-text);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.startup-run-desc,
+.startup-run-status {
+    color: var(--alas-entry-muted);
+    line-height: 1.55;
+}
+
+.startup-run-status {
+    margin-top: 10px;
+    font-size: .875rem;
+}
+
 .launcher-setting-row,
 .deploy-setting-toolbar {
     display: grid;
