@@ -249,7 +249,7 @@ class OcrBenchmark:
                 logger.info('Testing OCR with ANE...')
                 device = 'ane'
             else:
-                logger.info('Testing OCR with GPU (DirectML)...')
+                logger.info('Testing OCR with hardware acceleration (Windows ML auto-select)...')
                 device = 'gpu'
 
         res = self._run_single('azur_lane', 'sets_num', 'sets_num', ocr_device=device)
