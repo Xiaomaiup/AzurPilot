@@ -3893,7 +3893,6 @@ class AlasGUI(Frame):
                 </div>
                 <label class="launcher-switch" title="{t("Gui.StartupRun.Title")}">
                   <input id="{switch_id}" type="checkbox" disabled>
-                  <span class="launcher-slider"></span>
                 </label>
               </div>
               <div id="{status_id}" class="startup-run-status">{t("Gui.StartupRun.Loading")}</div>
@@ -4007,7 +4006,6 @@ class AlasGUI(Frame):
                 </div>
                 <label class="launcher-switch" title="{t("Gui.Launcher.AutoStart")}">
                   <input id="launcher-autostart-switch" type="checkbox" disabled>
-                  <span class="launcher-slider"></span>
                 </label>
               </div>
               <div id="launcher-status" class="launcher-setting-status">{t("Gui.Launcher.Loading")}</div>
@@ -4141,7 +4139,7 @@ class AlasGUI(Frame):
                 const value = field.value == null ? '' : field.value;
                 let input = '';
                 if (field.type === 'bool') {{
-                  input = `<label class="launcher-switch"><input data-deploy-key="${{escapeHtml(field.key)}}" type="checkbox" ${{value === true ? 'checked' : ''}}><span class="launcher-slider"></span></label>`;
+                  input = `<label class="launcher-switch"><input data-deploy-key="${{escapeHtml(field.key)}}" type="checkbox" ${{value === true ? 'checked' : ''}}></label>`;
                 }} else if (field.type === 'select') {{
                   const options = (field.options || []).map(opt => `<option value="${{escapeHtml(opt)}}" ${{String(opt) === String(value) ? 'selected' : ''}}>${{escapeHtml(opt)}}</option>`).join('');
                   input = `<select class="deploy-setting-select" data-deploy-key="${{escapeHtml(field.key)}}">${{options}}</select>`;
@@ -4732,7 +4730,6 @@ class AlasGUI(Frame):
             go_app("index", new_window=False)
 
         with use_scope("content"):
-            put_html('<div class="alas-home-marker" aria-hidden="true"></div>')
             put_text("Select your language / 选择语言").style(
                 "text-align: center; font-weight: 600"
             )
@@ -4757,6 +4754,7 @@ class AlasGUI(Frame):
                 ],
                 onclick=lambda t: set_theme(t),
             ).style("text-align: center")
+            put_html('<div class="alas-home-marker" aria-hidden="true"></div>')
             # show something
             put_markdown(
                 """
