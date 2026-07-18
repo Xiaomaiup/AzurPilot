@@ -144,7 +144,7 @@ uv run -m dev_tools.button_extract    # 从截图中提取按钮定义
 - `DigitCounter` (`ocr.py`) — 识别计数器如 `14/15`，返回 `(current, remain, total)`。
 - `Duration` (`ocr.py`) — 识别时长如 `08:00:00`，返回 `timedelta`。
 - `OcrYuv`、`DigitYuv`、`DigitCounterYuv`、`DurationYuv` — YUV 色彩空间变体。
-- `AlOcr` (`al_ocr.py`) — 基于 RapidOCR 的后端，支持 NCNN。支持 DirectML (Windows) 和 CoreML (macOS) GPU 加速。
+- `AlOcr` (`al_ocr.py`) — 基于 RapidOCR 的后端，支持 NCNN。支持 Windows ML 自动选择可见 NPU/GPU、CoreML (macOS) 和 ncnn Vulkan 硬件加速。
 - `NcnnRecOCR` (`ncnn_ocr.py`) — 基于 NCNN 的 OCR 识别，推理更快。模型：en、cn、jp、tw。模型存储在 `bin/ocr_models/ncnn/`。
 - `ModelProxyFactory` (`rpc.py`) — 基于 zerorpc 的 OCR 服务器模式，用于分布式推理。
 - `models.py` — 惰性加载的 OCR 模型实例：`azur_lane` (EN)、`azur_lane_jp` (JP)、`cnocr` (中+英)、`jp` (日文)、`tw` (繁体中文)。
@@ -513,10 +513,10 @@ page_main.link(button=MAIN_GOTO_REWARD, destination=page_reward)
 - `DigitCounter` — 识别计数器如 `14/15`
 - `Duration` — 识别时长如 `08:00:00`
 - `OcrYuv`、`DigitYuv`、`DigitCounterYuv`、`DurationYuv` — YUV 色彩空间变体
-- `AlOcr` — RapidOCR 后端，ONNX/NCNN 推理，GPU 加速（DirectML/CoreML）
+- `AlOcr` — RapidOCR 后端，ONNX/NCNN 推理，硬件加速（Windows ML 自动选择可见 NPU/GPU、CoreML）
 - OCR 模型：`azur_lane`（游戏数字/字母）、`cnocr`（中+英）、`jp`（日文）、`tw`（繁体中文）
 - OCR 后端：`onnx`（默认）、`ncnn`（推理更快）
-- OCR 设备：`cpu`、`gpu`（Windows 上 DirectML）、`ane`（macOS 上 CoreML）
+- OCR 硬件加速：`cpu`、`gpu`（Windows 上 Windows ML 自动选择可见 NPU/GPU，失败回退 CPU）、`ane`（macOS 上 CoreML）
 
 ### 装饰器 (`module/base/decorator.py`)
 - `@Config.when(SERVER='en')` — 基于配置有条件地分发方法（如服务器特定行为）。为其他服务器定义 `@Config.when(SERVER=None)` 回退。
@@ -548,7 +548,7 @@ page_main.link(button=MAIN_GOTO_REWARD, destination=page_reward)
 - **Python**：>=3.14,<3.15
 - **核心**：numpy、scipy、pillow、opencv-python、imageio、imageio-ffmpeg
 - **设备**：adbutils、uiautomator2、uiautomator2cache
-- **OCR**：rapidocr、ncnn、onnxruntime-directml (Windows)、onnxruntime (Linux/Mac)
+- **OCR**：rapidocr、ncnn、onnxruntime-windowsml (Windows)、onnxruntime (Linux/Mac)
 - **Web**：pywebio、starlette、uvicorn、aiofiles
 - **通知**：onepush
 - **AI**：openai（用于 LLM 错误分析）
