@@ -736,12 +736,16 @@
       "help": ""
     },
     "OcrDevice": {
-      "name": "OCR 裝置",
-      "help": "選擇 OCR 裝置。GPU 用 Windows DirectML，ANE 用 macOS Apple Neural Engine。自動：Apple Silicon Mac 使用 ANE，Windows VRAM > 1GB 用 GPU，否則 CPU。",
+      "name": "硬體加速",
+      "help": "選擇 OCR 硬體加速方式。不建議沒有 NPU/GPU 的使用者手動啟用，除非你知道自己在做什麼\nWindows 會透過 Windows ML 自動選擇可見的最佳硬體（NPU > GPU > CPU），ANE 僅用於 macOS Apple Neural Engine\n自動選擇：Windows 使用 Windows ML 自動選擇，Apple Silicon Mac 使用 ANE，其他平台使用 CPU。\nMicrosoft docs: https://learn.microsoft.com/zh-tw/windows/ai/new-windows-ml/select-execution-providers?tabs=python",
       "auto": "自動選擇",
       "cpu": "CPU",
-      "gpu": "GPU",
+      "gpu": "硬體加速",
       "ane": "ANE (Apple)"
+    },
+    "OcrWindowsMlInstallEp": {
+      "name": "安裝 Windows ML 廠商 EP",
+      "help": "啟用後會嘗試透過 Windows ML 自動安裝並註冊裝置支援的廠商執行提供者，用於 NPU 或專用 GPU 加速。失敗時會略過並回退到已可用的硬體或 CPU。\nMicrosoft docs: https://learn.microsoft.com/zh-tw/windows/ai/new-windows-ml/initialize-execution-providers?tabs=python"
     },
     "OcrBackend": {
       "name": "OCR 後端",

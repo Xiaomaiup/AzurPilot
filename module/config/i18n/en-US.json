@@ -736,12 +736,16 @@
       "help": ""
     },
     "OcrDevice": {
-      "name": "OCR Device",
-      "help": "Choose the OCR device. GPU uses Windows DirectML, ANE uses macOS Apple Neural Engine. Auto: Apple Silicon Mac uses ANE, GPU when VRAM > 1GB on Windows, otherwise CPU.",
+      "name": "Hardware Acceleration",
+      "help": "Choose the OCR hardware acceleration mode. Do not force it on machines without an NPU/GPU unless you know what you are doing. Windows uses Windows ML to select the best visible hardware (NPU > GPU > CPU), ANE uses macOS Apple Neural Engine. Auto: Windows uses Windows ML automatic selection, Apple Silicon Mac uses ANE, other platforms use CPU.\nMicrosoft docs: https://learn.microsoft.com/en-us/windows/ai/new-windows-ml/select-execution-providers?tabs=python",
       "auto": "Auto",
       "cpu": "CPU",
-      "gpu": "GPU",
+      "gpu": "Hardware Acceleration",
       "ane": "ANE (Apple)"
+    },
+    "OcrWindowsMlInstallEp": {
+      "name": "Install Windows ML Vendor EPs",
+      "help": "When enabled, AzurPilot uses Windows ML to automatically install and register vendor execution providers supported by this device for NPU or dedicated GPU acceleration. Failures are skipped and OCR falls back to existing hardware or CPU.\nMicrosoft docs: https://learn.microsoft.com/en-us/windows/ai/new-windows-ml/initialize-execution-providers?tabs=python"
     },
     "OcrBackend": {
       "name": "OCR Backend",

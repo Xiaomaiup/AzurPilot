@@ -199,6 +199,7 @@ Optimization:
   OcrDevice:
     value: auto
     option: [auto, cpu, gpu, ane]
+  OcrWindowsMlInstallEp: true
   OcrBackend:
     value: auto
     option: [auto, onnxruntime, ncnn]

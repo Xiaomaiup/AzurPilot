@@ -736,12 +736,16 @@
       "help": "让AzurPilot跑得更流畅喵~ (=^･ω･^=)"
     },
     "OcrDevice": {
-      "name": "OCR设备选择",
-      "help": "OCR跑在CPU/GPU/ANE上。GPU用Windows DirectML，ANE用macOS Neural Engine。自动：Apple Silicon选ANE，Windows显存>1G选GPU，否则CPU。",
+      "name": "硬件加速",
+      "help": "选择 OCR 硬件加速方式喵。没有 NPU/GPU 不推荐手动启用喵。Windows 会通过 Windows ML 自动选择可见的最佳硬件（NPU > GPU > CPU），ANE 用 macOS Neural Engine。自动：Windows 用 Windows ML 自动选择，Apple Silicon 选 ANE，其他平台 CPU。\n微软文档：https://learn.microsoft.com/zh-cn/windows/ai/new-windows-ml/select-execution-providers?tabs=python",
       "auto": "自动判断",
       "cpu": "CPU喵",
-      "gpu": "GPU喵",
+      "gpu": "硬件加速喵",
       "ane": "ANE喵"
+    },
+    "OcrWindowsMlInstallEp": {
+      "name": "安装 Windows ML 厂商 EP",
+      "help": "启用后会尝试通过 Windows ML 自动安装并注册设备支持的厂商执行提供程序，用于 NPU 或专用 GPU 加速。失败时会跳过并回退到已可用的硬件或 CPU。\n微软文档：https://learn.microsoft.com/zh-cn/windows/ai/new-windows-ml/initialize-execution-providers?tabs=python"
     },
     "OcrBackend": {
       "name": "OCR后端喵",

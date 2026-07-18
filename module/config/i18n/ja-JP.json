@@ -736,12 +736,16 @@
       "help": ""
     },
     "OcrDevice": {
-      "name": "OCR デバイス",
-      "help": "OCR デバイスを選択します。GPU は Windows DirectML、ANE は macOS Apple Neural Engine です。自動：Apple Silicon Mac は ANE、Windows VRAM > 1GB は GPU、それ以外は CPU。",
+      "name": "ハードウェアアクセラレーション",
+      "help": "OCR のハードウェアアクセラレーション方式を選択します。NPU/GPU がない環境での手動有効化は推奨しません。Windows は Windows ML で利用可能な最適ハードウェア（NPU > GPU > CPU）を選択し、ANE は macOS Apple Neural Engine を使用します。自動：Windows は Windows ML 自動選択、Apple Silicon Mac は ANE、それ以外は CPU。\nMicrosoft docs: https://learn.microsoft.com/ja-jp/windows/ai/new-windows-ml/select-execution-providers?tabs=python",
       "auto": "自動",
       "cpu": "CPU",
-      "gpu": "GPU",
+      "gpu": "ハードウェアアクセラレーション",
       "ane": "ANE (Apple)"
+    },
+    "OcrWindowsMlInstallEp": {
+      "name": "Windows ML ベンダー EP をインストール",
+      "help": "有効にすると、Windows ML を通してこのデバイスが対応するベンダー実行プロバイダーを自動インストールおよび登録し、NPU または専用 GPU 加速に使用します。失敗時はスキップし、既存のハードウェアまたは CPU にフォールバックします。\nMicrosoft docs: https://learn.microsoft.com/ja-jp/windows/ai/new-windows-ml/initialize-execution-providers?tabs=python"
     },
     "OcrBackend": {
       "name": "OCR バックエンド",

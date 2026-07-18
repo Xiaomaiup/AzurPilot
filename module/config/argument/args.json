@@ -507,6 +507,10 @@
           "ane"
         ]
       },
+      "OcrWindowsMlInstallEp": {
+        "type": "checkbox",
+        "value": true
+      },
       "OcrBackend": {
         "type": "select",
         "value": "auto",
